@@ -2,6 +2,8 @@
 #include "CMainGame.h"
 #include "CPlayer.h"
 #include "CMonster.h"
+#include "CNormalMonster.h"
+#include "CBossMonster.h"
 #include "CAbstractFactory.h"
 #include "CCollisionMgr.h"
 
@@ -21,7 +23,9 @@ void CMainGame::Initialize()
 	m_listObj[OBJ_PLAYER].push_back(CAbstractFactory<CPlayer>::CreatePlayer());
 	dynamic_cast<CPlayer*>(m_listObj[OBJ_PLAYER].front())->SetBullet(&m_listObj[OBJ_PLAYER_BULLET]);
 
-	CreateArrowMonster(3);
+	//CreateArrowMonster(3);
+
+	m_dwBossLastWaveTime = 5000.f;
 }	
 
 void CMainGame::Update()
@@ -29,11 +33,16 @@ void CMainGame::Update()
 	//일정 시간 지나면 몬스터 웨이브 생성
 	DWORD dwNow = GetTickCount64();
 	
-	if (dwNow - m_dwLastWaveTime >= MONSTER_WAVE_COOLTIME)
+	if (dwNow - m_dwNoralLastWaveTime >= NORMAL_MONSTER_WAVE_COOLTIME)
 	{
-		CreateArrowMonster(3);
+		CreateNoramlMonster(3);
 		//마지막으로 총 쏜 시각 갱신
-		m_dwLastWaveTime = dwNow;
+		m_dwNoralLastWaveTime = dwNow;
+	}
+	if (dwNow - m_dwBossLastWaveTime >= BOSS_MONSTER_WAVE_COOLTIME)
+	{
+		CreateBossMonster();
+		m_dwBossLastWaveTime = dwNow;
 	}
 	
 	for (size_t i = 0; i < OBJ_END; ++i)
@@ -52,7 +61,7 @@ void CMainGame::Update()
 		}
 	}
 	CCollisionMgr::PlayerBulletCollide(m_listObj[OBJ_PLAYER_BULLET], m_listObj[OBJ_MONSTER]);
-	CCollisionMgr::PlayerBulletCollide(m_listObj[OBJ_MONSTER_BULLET], m_listObj[OBJ_PLAYER]);
+	CCollisionMgr::MonsterBulletCollide(m_listObj[OBJ_MONSTER_BULLET], m_listObj[OBJ_PLAYER]);
 }
 
 void CMainGame::Render()
@@ -81,53 +90,34 @@ void CMainGame::Release()
 	ReleaseDC(g_hWnd, m_hDC);
 }
 
-void CMainGame::CreateArrowMonster(int iCount)
+void CMainGame::CreateNoramlMonster(int iCount)
 {
 	//첫번째 웨이브 몬스터 생성, 서로 다른 레벨값을 줘서 몬스터 생성
 	for (int i = 0; i < iCount; ++i)
 	{
-		// 0 1 0 이런 식으로 레벨값을 설정해서 중심 기준으로 화살 모양을 만든다.
-		//int iLevel = (iCount - i / 2 > 0) ? i : iCount - i;
-		if (i == 0)
-		{
-			m_listObj[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::
-				CreateMonster(WINCX * 0.5f - 100.f, -100.f, 5));
-		}
-		else if (i == 1)
-		{
-			m_listObj[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::
-				CreateMonster(WINCX * 0.5f, 0.f ,5));
-		}
-		else if (i == 2)
-		{
-			m_listObj[OBJ_MONSTER].push_back(CAbstractFactory<CMonster>::
-				CreateMonster(WINCX * 0.5f + 100.f, -100.f, 5));
-		}
+		float fRandX = (float)(rand() % WINCX);
+		CObj* pNoramlMonster = CAbstractFactory<CNormalMonster>::CreateMonster(fRandX, -100.f, 5);
+		//LimitLine을 400 이하의 랜덤한 수로 설정해서 대입을 시킨다.
+		float fLimitLine = (float)(rand() % 300 + 100);
+		dynamic_cast<CMonster*>(pNoramlMonster)->SetLimitLine(fLimitLine);
+		dynamic_cast<CMonster*>(pNoramlMonster)->SetTarget(m_listObj[OBJ_PLAYER].front());
+		m_listObj[OBJ_MONSTER].push_back(pNoramlMonster);
 	}
 	for (CObj* pMonster : m_listObj[OBJ_MONSTER])
 	{
 		dynamic_cast<CMonster*>(pMonster)->SetBullet(&m_listObj[OBJ_MONSTER_BULLET]);
 	}
-	/*
-	for (size_t i = 0; i < m_listObj[OBJ_MONSTER].size(); ++i)
-	{
-		for (CObj* pMonster : m_listObj[OBJ_MONSTER])
-		{
-			dynamic_cast<CMonster*>(pMonster)->SetBullet(&m_listObj[OBJ_MONSTER_BULLET]);
-		}
-	}
-	*/
-	/*
-	for (int i = 0; i < iCount; ++i)
-	{
-		m_listMonsterContainer.push_back(m_listObj[OBJ_MONSTER]);
-	}
-	for (auto pMonsterList : m_listMonsterContainer)
-	{
-		for (auto pMonster : pMonsterList)
-		{
-			dynamic_cast<CMonster*>(pMonster)->SetBullet(&m_listObj[OBJ_MONSTER_BULLET]);
-		}
-	}
-	*/
+	dynamic_cast<CPlayer*>(m_listObj[OBJ_PLAYER].front())->SetTargetMonster(&m_listObj[OBJ_MONSTER]);
+}
+
+void CMainGame::CreateBossMonster()
+{
+	CObj* pBossMonster = CAbstractFactory<CBossMonster>::CreateMonster(WINCX >> 1, -100.f, 1000);
+	dynamic_cast<CMonster*>(pBossMonster)->SetLimitLine(400.f);
+	dynamic_cast<CMonster*>(pBossMonster)->SetTarget(m_listObj[OBJ_PLAYER].front());
+	m_listObj[OBJ_MONSTER].push_back(pBossMonster);
+	dynamic_cast<CMonster*>(pBossMonster)->SetBullet(&m_listObj[OBJ_MONSTER_BULLET]);
+	dynamic_cast<CMonster*>(pBossMonster)->SetTarget(m_listObj[OBJ_PLAYER].front());
+
+	dynamic_cast<CPlayer*>(m_listObj[OBJ_PLAYER].front())->SetTargetMonster(&m_listObj[OBJ_MONSTER]);
 }

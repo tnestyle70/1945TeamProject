@@ -15,6 +15,7 @@ void CCollisionMgr::PlayerBulletCollide(list<CObj*> PlayerBullet, list<CObj*> Mo
 				{
 					pMonster->SetDead();
 				}
+				pPlayerBullet->SetDead();
 			}
 		}
 	}
@@ -34,6 +35,7 @@ void CCollisionMgr::MonsterBulletCollide(list<CObj*> MonsterBullet, list<CObj*> 
 				{
 					pPlayer->SetDead();
 				}
+				pMonsterBullet->SetDead();
 			}
 		}
 	}

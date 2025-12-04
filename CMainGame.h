@@ -7,19 +7,20 @@ class CMainGame
 public:
 	CMainGame();
 	~CMainGame();
-
 public:
 	void	Initialize();
 	void	Update();
 	void	Render();
 	void	Release();
 public:
-	void CreateArrowMonster(int iCount);
+	void CreateNoramlMonster(int iCount);
+	void CreateBossMonster();
 private:
 	HDC		m_hDC;
 	CObj* m_pPlayer;
 	list<list<CObj*>> m_listMonsterContainer;
 	list<CObj*> m_listObj[OBJ_END];
-	DWORD m_dwLastWaveTime;
+	DWORD m_dwNoralLastWaveTime;
+	DWORD m_dwBossLastWaveTime;
 };
 

@@ -12,7 +12,7 @@ public:
 	{
 		CObj* pObj = new T;
 		pObj->Initialize();
-		pObj->SetLife(10);
+		pObj->SetLife(1000000);
 		return pObj;
 	}
 	//위치 세팅

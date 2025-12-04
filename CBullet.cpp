@@ -20,7 +20,7 @@ int CBullet::Update()
 {
 	if (m_bDead)
 		return DEAD;
-
+	/*
 	if (m_eDir == UP)
 	{
 		m_tInfo.fY -= m_fSpeed;
@@ -29,10 +29,10 @@ int CBullet::Update()
 	{
 		m_tInfo.fY += m_fSpeed;
 	}
-	/*
+	*/
 	m_tInfo.fX += m_fSpeed * m_fDirX;
 	m_tInfo.fY += m_fSpeed * m_fDirY;
-	*/
+	
 	__super::Update_Rect();
 	
 	if (m_tRect.bottom >= WINCY || m_tRect.top <= 0)

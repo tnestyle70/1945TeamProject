@@ -31,6 +31,33 @@
     <Filter Include="01. Obj\03.Collision">
       <UniqueIdentifier>{1df7f688-f2ef-42f8-bab6-28c661038159}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Obj\01.Monster\NormalMonster">
+      <UniqueIdentifier>{50920b66-553c-449b-a98c-86f1316b53da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01.Monster\SpreadMonster">
+      <UniqueIdentifier>{0d337595-ded2-471e-a89e-196cc80d6fa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01.Monster\BossMonster">
+      <UniqueIdentifier>{6d988ef1-530d-4878-b86f-9d295bb9754b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\01.Monster\LeadingMonster">
+      <UniqueIdentifier>{a7e9b655-6f4f-4132-b4fa-7bcd0fea68af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Bullet\NormalBullet">
+      <UniqueIdentifier>{1f19a678-26a1-4f95-b006-2386a5c73a26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Bullet\LeadingBullet">
+      <UniqueIdentifier>{f1b23001-6904-4722-823b-64d6ce9ff6dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Bullet\SpreadBullet">
+      <UniqueIdentifier>{a5dab88e-d310-4bfd-ab99-6e50e1f928a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Bullet\ScrewBullet">
+      <UniqueIdentifier>{5453cefb-a2c7-40ca-a9a2-f4f439f7ae66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\02.Bullet\SunFlowerBullet">
+      <UniqueIdentifier>{2d5583ed-c0a1-4d57-8cfc-746273660a64}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -63,11 +90,35 @@
     <ClInclude Include="CMonster.h">
       <Filter>01. Obj\01.Monster</Filter>
     </ClInclude>
-    <ClInclude Include="CBullet.h">
-      <Filter>01. Obj\02.Bullet</Filter>
-    </ClInclude>
     <ClInclude Include="CCollisionMgr.h">
       <Filter>01. Obj\03.Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="CNormalMonster.h">
+      <Filter>01. Obj\01.Monster\NormalMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="CSpreadMonster.h">
+      <Filter>01. Obj\01.Monster\SpreadMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="CBossMonster.h">
+      <Filter>01. Obj\01.Monster\BossMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="CLeadingMonster.h">
+      <Filter>01. Obj\01.Monster\LeadingMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="CBullet.h">
+      <Filter>01. Obj\02.Bullet\NormalBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="CLeadingBullet.h">
+      <Filter>01. Obj\02.Bullet\LeadingBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="CSunFlowerBullet.h">
+      <Filter>01. Obj\02.Bullet\SunFlowerBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="CScrewBullet.h">
+      <Filter>01. Obj\02.Bullet\ScrewBullet</Filter>
+    </ClInclude>
+    <ClInclude Include="CSpreadBullet.h">
+      <Filter>01. Obj\02.Bullet\SpreadBullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -92,11 +143,35 @@
     <ClCompile Include="CAbstractFactory.h">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="CBullet.cpp">
-      <Filter>01. Obj\02.Bullet</Filter>
-    </ClCompile>
     <ClCompile Include="CCollisionMgr.cpp">
       <Filter>01. Obj\03.Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="CNormalMonster.cpp">
+      <Filter>01. Obj\01.Monster\NormalMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="CSpreadMonster.cpp">
+      <Filter>01. Obj\01.Monster\SpreadMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossMonster.cpp">
+      <Filter>01. Obj\01.Monster\BossMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="CLeadingMonster.cpp">
+      <Filter>01. Obj\01.Monster\LeadingMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="CBullet.cpp">
+      <Filter>01. Obj\02.Bullet\NormalBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="CLeadingBullet.cpp">
+      <Filter>01. Obj\02.Bullet\LeadingBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="CSunFlowerBullet.cpp">
+      <Filter>01. Obj\02.Bullet\SunFlowerBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="CScrewBullet.cpp">
+      <Filter>01. Obj\02.Bullet\ScrewBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="CSpreadBullet.cpp">
+      <Filter>01. Obj\02.Bullet\SpreadBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

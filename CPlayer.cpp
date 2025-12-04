@@ -2,6 +2,7 @@
 #include "CPlayer.h"
 #include "CAbstractFactory.h"
 #include "CBullet.h"
+#include "CLeadingBullet.h"
 
 CPlayer::CPlayer()
 {
@@ -17,6 +18,7 @@ void CPlayer::Initialize()
 	m_tInfo = { WINCX >> 1, WINCY >> 1, 50.f, 50.f };
 	m_fSpeed = 10.f;
 	m_fDistance = 25.f;
+	m_eArmor = eArmor::NORMAL_BULLET;
 }
 
 int CPlayer::Update()
@@ -48,13 +50,24 @@ void CPlayer::Release()
 {
 }
 
-void CPlayer::CreateBullet()
+void CPlayer::CreateNoramlBullet()
 {
 
 	CObj* pBullet = CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY);
 	pBullet->SetDirection(eDir::UP);
 	pBullet->SetSpeed(10.f);
 	m_pBulletList->push_back(pBullet);
+}
+
+void CPlayer::CreateSpreadBullet()
+{
+}
+
+void CPlayer::CreateLeadingBullet()
+{
+	CObj* pLeadingBullet = CAbstractFactory<CLeadingBullet>::Create(m_tInfo.fX, m_tInfo.fY);
+	pLeadingBullet->SetTargetMonster(this->GetMonsterListTarget());
+	m_pBulletList->push_back(pLeadingBullet);
 }
 
 void CPlayer::Key_Input()
@@ -69,7 +82,7 @@ void CPlayer::Key_Input()
 
 		if (dwNow - m_dwLastShotTime >= PLAYER_SHOT_COOLTIME)
 		{
-			CreateBullet();
+			CreateLeadingBullet();
 			//마지막으로 총 쏜 시각 갱신
 			m_dwLastShotTime = dwNow;
 		}

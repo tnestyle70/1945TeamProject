@@ -4,21 +4,18 @@
 class CMonster : public CObj
 {
 public:
-	CMonster();
-	~CMonster();
+	CMonster() {};
+	virtual ~CMonster() {};
 public:
-	void Initialize()override;
-	int Update()override;
-	void Render(HDC hDC)override;
-	void Release()override;
+	virtual void Initialize()PURE;
+	virtual int Update()PURE;
+	virtual void Render(HDC hDC)PURE;
+	virtual void Release()PURE;
 public:
-	void SetBullet(list<CObj*>* m_pMonsterBulletList)
-	{
-		m_pBulletList = m_pMonsterBulletList;
-	}
-	void CreateBullet();
-	void SetBulletDir(float fX, float fY, float fAngle);
-private:
+	void SetBullet(list<CObj*>* m_pMonsterBulletList) {m_pBulletList = m_pMonsterBulletList;}
+	void SetLimitLine(float fLimitLine) { m_fLimitLine = fLimitLine; }
+protected:
 	list<CObj*>* m_pBulletList;
 	bool m_bOnLimitLine;
+	float m_fLimitLine;
 };
