@@ -1,4 +1,6 @@
 #include "pch.h"
+#include "CPlayer.h"
+#include "CItem.h"
 #include "CCollisionMgr.h"
 
 void CCollisionMgr::PlayerBulletCollide(list<CObj*> PlayerBullet, list<CObj*> Monster)
@@ -36,6 +38,23 @@ void CCollisionMgr::MonsterBulletCollide(list<CObj*> MonsterBullet, list<CObj*> 
 					pPlayer->SetDead();
 				}
 				pMonsterBullet->SetDead();
+			}
+		}
+	}
+}
+
+void CCollisionMgr::PlayerItemCollide(list<CObj*> Player, list<CObj*> Item)
+{
+	RECT rc = {};
+	for (auto& pPlayer : Player)
+	{
+		for (auto& pItem : Item)
+		{
+			if (IntersectRect(&rc, pPlayer->GetRect(), pItem->GetRect()))
+			{
+				eArmor eItemType = dynamic_cast<CItem*>(pItem)->GetItemType();
+				dynamic_cast<CPlayer*>(pPlayer)->SetArmorState(eItemType);
+				pItem->SetDead();
 			}
 		}
 	}

@@ -12,10 +12,10 @@ public:
 	virtual void Render(HDC hDC)PURE;
 	virtual void Release()PURE;
 public:
-	void SetBullet(list<CObj*>* m_pMonsterBulletList) {m_pBulletList = m_pMonsterBulletList;}
+	virtual void DropItem()PURE;
 	void SetLimitLine(float fLimitLine) { m_fLimitLine = fLimitLine; }
 protected:
-	list<CObj*>* m_pBulletList;
 	bool m_bOnLimitLine;
+	bool m_bDropItem;
 	float m_fLimitLine;
 };

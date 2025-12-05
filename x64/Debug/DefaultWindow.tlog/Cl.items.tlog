@@ -1,7 +1,9 @@
 C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CAbstractFactory.h;C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\x64\Debug\CAbstractFactory.obj
 C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CBossMonster.cpp;C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\x64\Debug\CBossMonster.obj
 C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CBullet.cpp;C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\x64\Debug\CBullet.obj
+C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CBossCloneMonster.cpp;C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\x64\Debug\CBossCloneMonster.obj
 C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CCollisionMgr.cpp;C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\x64\Debug\CCollisionMgr.obj
+C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CItem.cpp;C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\x64\Debug\CItem.obj
 C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CLeadingBullet.cpp;C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\x64\Debug\CLeadingBullet.obj
 C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CLeadingMonster.cpp;C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\x64\Debug\CLeadingMonster.obj
 C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CMainGame.cpp;C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\x64\Debug\CMainGame.obj
@@ -11,6 +13,7 @@ C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CO
 C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CObjMgr.cpp;C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\x64\Debug\CObjMgr.obj
 C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CPlayer.cpp;C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\x64\Debug\CPlayer.obj
 C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CScrewBullet.cpp;C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\x64\Debug\CScrewBullet.obj
+C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CShield.cpp;C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\x64\Debug\CShield.obj
 C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CSpreadBullet.cpp;C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\x64\Debug\CSpreadBullet.obj
 C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CSpreadMonster.cpp;C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\x64\Debug\CSpreadMonster.obj
 C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CSunFlowerBullet.cpp;C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\x64\Debug\CSunFlowerBullet.obj

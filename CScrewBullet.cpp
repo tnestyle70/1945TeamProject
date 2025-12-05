@@ -32,24 +32,12 @@ int CScrewBullet::Update() //Bullet은 상태만 변화, 판단은 MainGame에서 내리기
 		m_tCenter.y = m_tInfo.fY + m_fDistance;
 		m_bStart = false;
 	}
-	float fDX = m_pTarget->GetInfo()->fX - m_tInfo.fX;
-	float fDY = m_pTarget->GetInfo()->fY - m_tInfo.fY;
-	//빗변 구하기
-	float fDistance = sqrtf(fDX * fDX + fDY * fDY);
-
-	float fCeta = acosf(fDX / fDistance);
-	float fDegree = fCeta * (180 / PI);
-
-	if (fDY <= 0)
-	{
-		fDegree = 360 - fDegree;
-	}
-	//구한 세타값을 기준으로 이동
-	m_tCenter.x += m_fSpeed * cosf(fDegree * (PI / 180));
-	m_tCenter.y += m_fSpeed * sinf(fDegree * (PI / 180));
+	//기존 총알 로직대로 이동
+	m_tCenter.x += m_fSpeed * cosf(m_fAngle * (PI / 180));
+	m_tCenter.y -= m_fSpeed * sinf(m_fAngle * (PI / 180));
 
 	m_fRotateAngle += m_fRotateSpeed;
-
+	//총알은 rotate와 center를 중심으로 공전하며 이동
 	m_tInfo.fX = m_tCenter.x + m_fDistance * cosf(m_fRotateAngle * (PI / 180.f));
 	m_tInfo.fY = m_tCenter.y - m_fDistance * sinf(m_fRotateAngle * (PI / 180.f));
 

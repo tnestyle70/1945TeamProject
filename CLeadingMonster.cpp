@@ -2,6 +2,7 @@
 #include "CLeadingMonster.h"
 #include "CBullet.h"
 #include "CAbstractFactory.h"
+#include "CObjMgr.h"
 
 CLeadingMonster::CLeadingMonster()
 {
@@ -96,7 +97,7 @@ void CLeadingMonster::CreateBullet()
 	CObj* pBullet = CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY + m_fDistance);
 	pBullet->SetDirection(eDir::DOWN);
 	pBullet->SetSpeed(3.f);
-	m_pBulletList->push_back(pBullet);
+	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER_BULLET, pBullet);
 	return;
 }
 

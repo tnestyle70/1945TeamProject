@@ -55,6 +55,9 @@ void CObjMgr::Update()
 				iter++;
 		}
 	}
+	CCollisionMgr::PlayerItemCollide(m_listObj[OBJ_PLAYER], m_listObj[OBJ_ITEM]);
+	CCollisionMgr::PlayerBulletCollide(m_listObj[OBJ_PLAYER_BULLET], m_listObj[OBJ_MONSTER]);
+	CCollisionMgr::MonsterBulletCollide(m_listObj[OBJ_MONSTER_BULLET], m_listObj[OBJ_PLAYER]);
 }
 /*
 void CObjMgr::Late_Update()

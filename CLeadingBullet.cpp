@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "CObjMgr.h"
 #include "CLeadingBullet.h"
 
 CLeadingBullet::CLeadingBullet()
@@ -60,10 +61,12 @@ void CLeadingBullet::Render(HDC hDC)
 
 CObj* CLeadingBullet::FindNearestMonster()
 {
+	list<CObj*>* plistMonster = CObjMgr::Get_Instance()->Get_Object_List(OBJ_MONSTER);
+
 	float fNearnestDist = 1000000.f;
 
-	for (auto iter = m_plistMonster->begin();
-		iter != m_plistMonster->end();)
+	for (auto iter = plistMonster->begin();
+		iter != plistMonster->end();)
 	{
 		CObj* pMonster = (*iter);
 		float fDX = pMonster->GetInfo()->fX - m_tInfo.fX;
@@ -84,8 +87,8 @@ CObj* CLeadingBullet::FindNearestMonster()
 	}
 	else
 	{
-		for (auto iter = m_plistMonster->begin();
-			iter != m_plistMonster->end();)
+		for (auto iter = plistMonster->begin();
+			iter != plistMonster->end();)
 		{
 			CObj* pMonster = (*iter);
 			float fDX = pMonster->GetInfo()->fX - m_tInfo.fX;

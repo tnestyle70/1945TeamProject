@@ -1,41 +1,12 @@
-﻿  CBossMonster.cpp
-C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CBossMonster.cpp(36,14): warning C4244: '초기화 중': 'ULONGLONG'에서 'DWORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  (소스 파일 '/CBossMonster.cpp'을(를) 컴파일하는 중)
+﻿  CLeadingBullet.cpp
+C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CLeadingBullet.cpp(37,17): warning C4244: '초기화 중': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 '/CLeadingBullet.cpp'을(를) 컴파일하는 중)
   
-C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CBossMonster.cpp(67,42): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  (소스 파일 '/CBossMonster.cpp'을(를) 컴파일하는 중)
+C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CLeadingBullet.cpp(44,41): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 '/CLeadingBullet.cpp'을(를) 컴파일하는 중)
   
-C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CBossMonster.cpp(68,42): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  (소스 파일 '/CBossMonster.cpp'을(를) 컴파일하는 중)
+C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CLeadingBullet.cpp(45,41): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 '/CLeadingBullet.cpp'을(를) 컴파일하는 중)
   
-C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CBossMonster.cpp(143,30): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  (소스 파일 '/CBossMonster.cpp'을(를) 컴파일하는 중)
-  
-C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CBossMonster.cpp(144,31): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  (소스 파일 '/CBossMonster.cpp'을(를) 컴파일하는 중)
-  
-C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CBossMonster.cpp(153,26): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  (소스 파일 '/CBossMonster.cpp'을(를) 컴파일하는 중)
-  
-C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CBossMonster.cpp(154,27): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  (소스 파일 '/CBossMonster.cpp'을(를) 컴파일하는 중)
-  
-C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CBossMonster.cpp(159,26): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  (소스 파일 '/CBossMonster.cpp'을(를) 컴파일하는 중)
-  
-C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CBossMonster.cpp(160,27): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  (소스 파일 '/CBossMonster.cpp'을(를) 컴파일하는 중)
-  
-C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CBossMonster.cpp(169,23): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  (소스 파일 '/CBossMonster.cpp'을(를) 컴파일하는 중)
-  
-C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CBossMonster.cpp(175,23): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  (소스 파일 '/CBossMonster.cpp'을(를) 컴파일하는 중)
-  
-C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CBossMonster.cpp(181,23): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  (소스 파일 '/CBossMonster.cpp'을(를) 컴파일하는 중)
-  
-C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CBossMonster.cpp(187,23): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  (소스 파일 '/CBossMonster.cpp'을(를) 컴파일하는 중)
-  
+C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CLeadingBullet.cpp(105,1): warning C4715: 'CLeadingBullet::FindNearestMonster': 모든 제어 경로에서 값을 반환하지는 않습니다.
   DefaultWindow.vcxproj -> C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\x64\Debug\DefaultWindow.exe

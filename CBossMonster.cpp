@@ -5,6 +5,8 @@
 #include "CSunFlowerBullet.h"
 #include "CSpreadBullet.h"
 #include "CAbstractFactory.h"
+#include "CObjMgr.h"
+#include "CItem.h"
 
 CBossMonster::CBossMonster()
 {
@@ -25,13 +27,21 @@ void CBossMonster::Initialize()
 	m_fLimitLine = 500.f;
 	m_fAngle = 20.f;
 	m_fSpread = 20.f;
-	m_eArmor = eArmor::NORMAL_BULLET;
+	m_eArmor = eArmor::NORMAL;
+	m_bDropItem = false;
 }
 
 int CBossMonster::Update()
 {
 	if (m_bDead)
+	{
+		if (!m_bDropItem)
+		{
+			DropItem();
+			m_bDropItem = true;
+		}
 		return DEAD;
+	}
 
 	DWORD dwNow = GetTickCount64();
 
@@ -42,7 +52,7 @@ int CBossMonster::Update()
 		{
 			if (dwNow - m_dwLastShotTime >= BOSS_MONSTER_SCREW_SHOT_COOLTIME)
 			{
-				CreateSpreadBullet();
+				CreateBullet();
 				m_dwLastShotTime = dwNow;
 			}
 		}
@@ -99,6 +109,13 @@ void CBossMonster::Render(HDC hDC)
 
 void CBossMonster::Release()
 {
+
+}
+
+void CBossMonster::DropItem()
+{
+	CObj* pItem = CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY);
+	CObjMgr::Get_Instance()->Add_Object(OBJ_ITEM, pItem);
 }
 
 void CBossMonster::CreateSunFlower()
@@ -108,7 +125,7 @@ void CBossMonster::CreateSunFlower()
 	{
 		CObj* pBullet = CAbstractFactory<CSunFlowerBullet>::Create(m_tInfo.fX, m_tInfo.fY);
 		pBullet->SetAngle(fStartAngle);
-		m_pBulletList->push_back(pBullet);
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER_BULLET, pBullet);
 		fStartAngle += 10.f;
 	}
 }
@@ -121,8 +138,9 @@ void CBossMonster::CreateSpreadBullet()
 		CObj* pBullet = CAbstractFactory<CSpreadBullet>::Create(m_tInfo.fX, m_tInfo.fY);
 		pBullet->SetAngle(fStartAngle);
 		fStartAngle -= 10.f;
-		//pBullet->SetTarget(this->GetTarget());
-		m_pBulletList->push_back(pBullet);
+		pBullet->SetTarget(CObjMgr::Get_Instance()->Get_Object(OBJ_PLAYER));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER_BULLET, pBullet);
+		//m_pBulletList->push_back(pBullet);
 	}
 }
 
@@ -132,8 +150,8 @@ void CBossMonster::CreateScrewBullet()
 	CObj* pBullet = CAbstractFactory<CScrewBullet>::Create(m_tInfo.fX, m_tInfo.fY);
 	pBullet->SetAngle(fStartAngle);
 	fStartAngle += 10.f;
-	pBullet->SetTarget(this->GetTarget());
-	m_pBulletList->push_back(pBullet);
+	pBullet->SetTarget(CObjMgr::Get_Instance()->Get_Object(OBJ_PLAYER));
+	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER_BULLET, pBullet);
 	return;
 }
 
@@ -144,7 +162,7 @@ void CBossMonster::CreateBullet()
 	float fDirY = -sinf(m_fAngle * (PI / 180));
 	pBullet->SetSpeed(3.f);
 	pBullet->SetDirection(fDirX, fDirY);
-	m_pBulletList->push_back(pBullet);
+	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER_BULLET, pBullet);
 	return;
 }
 

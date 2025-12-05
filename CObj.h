@@ -21,8 +21,6 @@ public:
 	int GetLife() { return m_iLife; }
 	void SetTarget(CObj* pTarget) { m_pTarget = pTarget; }
 	CObj* GetTarget() { return m_pTarget; }
-	void SetTargetMonster(list<CObj*>* plistMonster) { m_plistMonster = plistMonster; }
-	list<CObj*>* GetMonsterListTarget() { return m_plistMonster; }
 	bool IsDead() { return m_bDead; }
 	void SetAngle(float fAngle) {m_fAngle = fAngle;}
 	void SetSpeed(float fSpeed) { m_fSpeed = fSpeed; }
@@ -33,11 +31,9 @@ public:
 protected:
 	INFO	m_tInfo;
 	RECT	m_tRect;
-	eArmor m_eArmor;
 	eDir m_eDir;
 	DWORD m_dwLastShotTime;
 	CObj* m_pTarget;
-	list<CObj*>* m_plistMonster;
 	int m_iLife;
 	bool m_bDead;
 	float	m_fSpeed;

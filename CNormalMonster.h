@@ -12,6 +12,7 @@ public:
 	void Render(HDC hDC)override;
 	void Release()override;
 public:
+	void DropItem()override;
 	void CreateBullet();
 	void SetBulletDir(float fX, float fY, float fAngle);
 };

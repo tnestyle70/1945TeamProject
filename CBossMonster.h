@@ -12,6 +12,7 @@ public:
 	void Render(HDC hDC)override;
 	void Release()override;
 public:
+	void DropItem()override;
 	void CreateSunFlower();
 	void CreateSpreadBullet();
 	void CreateScrewBullet();
@@ -21,6 +22,7 @@ public:
 	void SetBossDirection();
 	void ResolveCollision();
 private:
+	eArmor m_eArmor;
 	float m_fStartAngle;
 	float m_fStep;
 	float m_fSpread;

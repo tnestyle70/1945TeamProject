@@ -58,6 +58,15 @@
     <Filter Include="01. Obj\02.Bullet\SunFlowerBullet">
       <UniqueIdentifier>{2d5583ed-c0a1-4d57-8cfc-746273660a64}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Obj\01.Monster\CloneBossMonster">
+      <UniqueIdentifier>{53132fab-e681-4151-8fa1-2256e49da0e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\05.Item">
+      <UniqueIdentifier>{79608475-4a16-4abc-aee0-859d8c68a02b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj\04.Shield">
+      <UniqueIdentifier>{9a5e7f94-d25f-45fd-b4d8-bc1010f07d56}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -123,6 +132,15 @@
     <ClInclude Include="CObjMgr.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
+    <ClInclude Include="CBossCloneMonster.h">
+      <Filter>01. Obj\01.Monster\CloneBossMonster</Filter>
+    </ClInclude>
+    <ClInclude Include="CShield.h">
+      <Filter>01. Obj\04.Shield</Filter>
+    </ClInclude>
+    <ClInclude Include="CItem.h">
+      <Filter>01. Obj\05.Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DefaultWindow.cpp">
@@ -178,6 +196,15 @@
     </ClCompile>
     <ClCompile Include="CObjMgr.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossCloneMonster.cpp">
+      <Filter>01. Obj\01.Monster\CloneBossMonster</Filter>
+    </ClCompile>
+    <ClCompile Include="CShield.cpp">
+      <Filter>01. Obj\04.Shield</Filter>
+    </ClCompile>
+    <ClCompile Include="CItem.cpp">
+      <Filter>01. Obj\05.Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
