@@ -18,7 +18,7 @@ void CBossMonster::Initialize()
 {
 	m_tInfo.fCX = 150.f;
 	m_tInfo.fCY = 150.f;
-	m_fSpeed = 3.f;
+	m_fSpeed = 5.f;
 	m_bOnLimitLine = false;
 	m_dwLastShotTime = BOSS_MONSTER_SUNFLOWER_SHOT_COOLTIME;
 	m_fDistance = 75.f;
@@ -35,51 +35,54 @@ int CBossMonster::Update()
 
 	DWORD dwNow = GetTickCount64();
 
-
-
 	if (m_bOnLimitLine)
 	{
+		m_fLimitLine = 10000.f;
 		if (m_iLife > 950 && m_iLife <= 1000)
 		{
-			if (dwNow - m_dwLastShotTime >= BOSS_MONSTER_SPREAD_SHOT_COOLTIME)
+			if (dwNow - m_dwLastShotTime >= BOSS_MONSTER_SCREW_SHOT_COOLTIME)
 			{
 				CreateSpreadBullet();
-				m_fAngle += 30;
 				m_dwLastShotTime = dwNow;
 			}
 		}
-		else if (m_iLife >= 600 && m_iLife <= 800)
+		else if (m_iLife >= 900 && m_iLife <= 950)
 		{
 			if (dwNow - m_dwLastShotTime >= BOSS_MONSTER_SUNFLOWER_SHOT_COOLTIME)
 			{
+				m_fSpeed += 5.f;
 				CreateSunFlower();
 				m_dwLastShotTime = dwNow;
 			}
 		}
-		else if (m_iLife >= 600 && m_iLife <= 800)
+		else if (m_iLife >= 600 && m_iLife <= 900)
 		{
 			if (dwNow - m_dwLastShotTime >= BOSS_MONSTER_SUNFLOWER_SHOT_COOLTIME)
 			{
-				CreateSunFlower();
+				m_fSpeed += 5.f;
+				CreateScrewBullet();
 				m_dwLastShotTime = dwNow;
 			}
 		}
+		m_tInfo.fX += m_fSpeed * cosf(m_fAngle * (PI / 180));
+		m_tInfo.fY -= m_fSpeed * sinf(m_fAngle * (PI / 180));
+		ResolveCollision();
 		//SetBossDirection();
-		m_tInfo.fX += m_fSpeed * m_fDirX;
-		m_tInfo.fY += m_fSpeed * m_fDirY;
+		//m_tInfo.fX += m_fSpeed * m_fDirX;
+		//m_tInfo.fY += m_fSpeed * m_fDirY;
 		//ResolveCollision();
 	}
-
+	if (!m_bOnLimitLine)
+	{
+		m_tInfo.fY += m_fSpeed;
+	}
 	//한계선 체크, 선에 닿았을 때 LimitLine true로 변경 후 총알 발사
 	if (m_tRect.bottom >= m_fLimitLine)
 	{
 		m_tInfo.fY = m_fLimitLine - m_tInfo.fCX * 0.5f;
-		m_fSpeed = 0.f;
 		m_bOnLimitLine = true;
 	}
-
-	m_tInfo.fY += m_fSpeed;
-
+	
 	__super::Update_Rect();
 
 	return NOEVENT;
@@ -112,11 +115,12 @@ void CBossMonster::CreateSunFlower()
 
 void CBossMonster::CreateSpreadBullet()
 {
+	float fStartAngle = m_fAngle;
 	for (int i = 0; i < 5; ++i)
 	{
 		CObj* pBullet = CAbstractFactory<CSpreadBullet>::Create(m_tInfo.fX, m_tInfo.fY);
-		pBullet->SetAngle(m_fAngle);
-		m_fAngle -= 10.f;
+		pBullet->SetAngle(fStartAngle);
+		fStartAngle -= 10.f;
 		//pBullet->SetTarget(this->GetTarget());
 		m_pBulletList->push_back(pBullet);
 	}
@@ -124,9 +128,10 @@ void CBossMonster::CreateSpreadBullet()
 
 void CBossMonster::CreateScrewBullet()
 {
+	float fStartAngle = m_fAngle;
 	CObj* pBullet = CAbstractFactory<CScrewBullet>::Create(m_tInfo.fX, m_tInfo.fY);
-	pBullet->SetAngle(m_fAngle);
-	m_fAngle += 10.f;
+	pBullet->SetAngle(fStartAngle);
+	fStartAngle += 10.f;
 	pBullet->SetTarget(this->GetTarget());
 	m_pBulletList->push_back(pBullet);
 	return;
@@ -157,8 +162,29 @@ void CBossMonster::SetBossDirection()
 
 void CBossMonster::ResolveCollision()
 {
-	if (m_tRect.right <= WINCX - 10.f)
+	float fRandAngle;
+	if (m_tRect.right >= WINCX)
 	{
-		m_fAngle = 90.f;
+		m_tInfo.fX -= 10.f;
+		fRandAngle = rand() % 360;
+		m_fAngle = fRandAngle;
+	}
+	if (m_tRect.left <= 0)
+	{
+		m_tInfo.fX += 10.f;
+		fRandAngle = rand() % 360;
+		m_fAngle = fRandAngle;
+	}
+	if (m_tRect.top <= 0)
+	{
+		m_tInfo.fY += 10.f;
+		fRandAngle = rand() % 360;
+		m_fAngle = fRandAngle;
+	}
+	if (m_tRect.bottom >= WINCY)
+	{
+		m_tInfo.fY -= 10.f;
+		fRandAngle = rand() % 360;
+		m_fAngle = fRandAngle;
 	}
 }

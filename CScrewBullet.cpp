@@ -14,10 +14,10 @@ void CScrewBullet::Initialize()
 {
 	m_tInfo.fCX = 20.f;
 	m_tInfo.fCY = 20.f;
-	m_fSpeed = 10.f; //속도 초기화
-	m_fDistance = 30.f;//총알과 중심으로 회전할 반지름 사이의 거리
-	m_fRotateAngle = 15.f;
-	m_fRotateSpeed = 20.f;
+	m_fSpeed = 5.f; //속도 초기화
+	m_fDistance = 50.f;//총알과 중심으로 회전할 반지름 사이의 거리
+	m_fRotateAngle = 10.f;
+	m_fRotateSpeed = 10.f;
 }
 
 int CScrewBullet::Update() //Bullet은 상태만 변화, 판단은 MainGame에서 내리기

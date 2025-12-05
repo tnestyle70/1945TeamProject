@@ -66,8 +66,8 @@ CObj* CLeadingBullet::FindNearestMonster()
 		iter != m_plistMonster->end();)
 	{
 		CObj* pMonster = (*iter);
-		float fDX = pMonster->GetInfo()->fX;
-		float fDY = pMonster->GetInfo()->fY;
+		float fDX = pMonster->GetInfo()->fX - m_tInfo.fX;
+		float fDY = pMonster->GetInfo()->fY - m_tInfo.fY;
 		float fLen = sqrtf(fDX * fDX + fDY * fDY);
 		if (fNearnestDist >= fLen)
 		{
@@ -88,8 +88,8 @@ CObj* CLeadingBullet::FindNearestMonster()
 			iter != m_plistMonster->end();)
 		{
 			CObj* pMonster = (*iter);
-			float fDX = pMonster->GetInfo()->fX;
-			float fDY = pMonster->GetInfo()->fY;
+			float fDX = pMonster->GetInfo()->fX - m_tInfo.fX;
+			float fDY = pMonster->GetInfo()->fY - m_tInfo.fY;
 			float fLen = sqrtf(fDX * fDX + fDY * fDY);
 			if (fNearnestDist == fLen)
 			{

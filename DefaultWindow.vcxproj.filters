@@ -120,6 +120,9 @@
     <ClInclude Include="CSpreadBullet.h">
       <Filter>01. Obj\02.Bullet\SpreadBullet</Filter>
     </ClInclude>
+    <ClInclude Include="CObjMgr.h">
+      <Filter>소스 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DefaultWindow.cpp">
@@ -172,6 +175,9 @@
     </ClCompile>
     <ClCompile Include="CSpreadBullet.cpp">
       <Filter>01. Obj\02.Bullet\SpreadBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="CObjMgr.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
