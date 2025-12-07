@@ -1,8 +1,8 @@
 #pragma once
-#include "CObj.h"
+#include "CBulletAbstract.h"
 
 class CCloneBossBullet :
-    public CObj
+    public CBulletAbstract
 {
 public:
 	CCloneBossBullet();
@@ -14,7 +14,9 @@ public:
 	void Render(HDC hDC) override;
 public:
 	void ResolveCollision();
+	float& GetOriginAngle() { return m_fOriginAngle; }
 private:
+	float m_fOriginAngle;
 	bool m_bStart;
 };
 

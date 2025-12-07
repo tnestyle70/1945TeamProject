@@ -14,8 +14,10 @@ void CCloneBossBullet::Initialize()
 {
 	m_tInfo.fCX = 10.f;
 	m_tInfo.fCY = 10.f;
-	m_fSpeed = 10.f;
+	m_fSpeed = 15.f;
 	m_bStart = false;
+	m_eBulletInfo = eBulletInfo::TARGET_BULLET;
+	m_fOriginAngle = 0.f;
 }
 
 int CCloneBossBullet::Update()
@@ -31,6 +33,7 @@ int CCloneBossBullet::Update()
 		float fLen = sqrtf(fDX * fDX + fDY * fDY);
 		float fCeta = acosf(fDX / fLen);
 		float fDegree = fCeta * (180 / PI);
+		m_fOriginAngle = fDegree;
 		if (fDY <= 0)
 		{
 			fDegree = 360 - fDegree;

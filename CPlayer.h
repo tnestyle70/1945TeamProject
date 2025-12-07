@@ -7,7 +7,6 @@ class CPlayer :
 public:
     CPlayer();
     virtual ~CPlayer();
-
 public:
     void Initialize() override;
     int Update() override;
@@ -21,6 +20,7 @@ public:
     void CreateScrewBullet();
     void CreateSpreadBullet();
     void CreateLeadingBullet();
+    void CreateUltimate();
     void CreateShield();
     int GetScore() { return m_iScore; }
     void UpdateScore() { m_iScore += 1; };

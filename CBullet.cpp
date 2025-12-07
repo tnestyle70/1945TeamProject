@@ -14,6 +14,7 @@ void CBullet::Initialize()
 	m_tInfo.fCX = 10.f;
 	m_tInfo.fCY = 10.f;
 	m_fSpeed = 10.f;
+	m_eBulletInfo = eBulletInfo::NORMAL_BULLET;
 }
 
 int CBullet::Update()
@@ -23,11 +24,6 @@ int CBullet::Update()
 	//발사시 고정된 앵글을 가진 상태에서 발사되는 총알
 	m_tInfo.fX += m_fSpeed * cosf(m_fAngle * (PI / 180));
 	m_tInfo.fY -= m_fSpeed * sinf(m_fAngle * (PI / 180));
-	
-	__super::Update_Rect();
-	
-	if (m_tRect.bottom >= WINCY || m_tRect.top <= 0)
-		return DEAD;
 
 	__super::Update_Rect();
 

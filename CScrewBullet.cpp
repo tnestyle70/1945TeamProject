@@ -18,6 +18,7 @@ void CScrewBullet::Initialize()
 	m_fDistance = 50.f;//총알과 중심으로 회전할 반지름 사이의 거리
 	m_fRotateAngle = 10.f;
 	m_fRotateSpeed = 10.f;
+	m_eBulletInfo = eBulletInfo::NORMAL_BULLET;
 }
 
 int CScrewBullet::Update() //Bullet은 상태만 변화, 판단은 MainGame에서 내리기

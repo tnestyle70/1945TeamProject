@@ -14,6 +14,7 @@ void CSunFlowerBullet::Initialize()
 	m_tInfo.fCX = 10.f;
 	m_tInfo.fCY = 10.f;
 	m_fSpeed = 10.f; //속도 초기화
+	m_eBulletInfo = eBulletInfo::NORMAL_BULLET;
 }
 
 int CSunFlowerBullet::Update() //Bullet은 상태만 변화, 판단은 MainGame에서 내리기

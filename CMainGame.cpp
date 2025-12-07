@@ -41,8 +41,8 @@ void CMainGame::Update()
 		int iRandSpawn = rand() % 2;
 		switch (iRandSpawn)
 		{
-		case 0: CreateNoramlMonster(3); break;
-		case 1: CreateSpreadMonster(3); break;
+		case 0: CreateSpreadMonster(3); break;
+		case 1: CreateNoramlMonster(3); break;
 		default:
 			break;
 		}
@@ -58,7 +58,7 @@ void CMainGame::Update()
 		eBossPhase = eBossPhase::APPEAR;
 		break;
 	case APPEAR:
-		if (dynamic_cast<CPlayer*>(pPlayer)->GetScore() >= 3)
+		if (dynamic_cast<CPlayer*>(pPlayer)->GetScore() >= 10)
 		{
 			CreateBossMonster();
 			eBossPhase = eBossPhase::ATTACK;
@@ -69,7 +69,6 @@ void CMainGame::Update()
 	default:
 		break;
 	}
-
 	CObjMgr::Get_Instance()->Update();
 }
 

@@ -138,6 +138,7 @@
     <ClInclude Include="CBossCloneMonster.h" />
     <ClInclude Include="CBossMonster.h" />
     <ClInclude Include="CBullet.h" />
+    <ClInclude Include="CBulletAbstract.h" />
     <ClInclude Include="CCloneBossBullet.h" />
     <ClInclude Include="CCollisionMgr.h" />
     <ClInclude Include="CItem.h" />
@@ -166,6 +167,7 @@
     <ClCompile Include="CBossMonster.cpp" />
     <ClCompile Include="CBullet.cpp" />
     <ClCompile Include="CBossCloneMonster.cpp" />
+    <ClCompile Include="CBulletAbstract.cpp" />
     <ClCompile Include="CCloneBossBullet.cpp" />
     <ClCompile Include="CCollisionMgr.cpp" />
     <ClCompile Include="CItem.cpp" />

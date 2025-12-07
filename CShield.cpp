@@ -52,8 +52,8 @@ void CShield::Render(HDC hDC)
 
 void CShield::TryParry(float fAngle)
 {
+	float fStartAngle = 180.f + fAngle;
 	CObj* pBullet = CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY);
-	//Bullet의 Angle을 기준으로 총알을 발사
-	pBullet->SetAngle(fAngle);
+	pBullet->SetAngle(fStartAngle);
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER_BULLET, pBullet);
 }

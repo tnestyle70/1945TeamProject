@@ -147,6 +147,9 @@
     <ClInclude Include="CCloneBossBullet.h">
       <Filter>01. Obj\02.Bullet\CloneBossBullet</Filter>
     </ClInclude>
+    <ClInclude Include="CBulletAbstract.h">
+      <Filter>01. Obj\02.Bullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DefaultWindow.cpp">
@@ -214,6 +217,9 @@
     </ClCompile>
     <ClCompile Include="CCloneBossBullet.cpp">
       <Filter>01. Obj\02.Bullet\CloneBossBullet</Filter>
+    </ClCompile>
+    <ClCompile Include="CBulletAbstract.cpp">
+      <Filter>01. Obj\02.Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

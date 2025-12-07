@@ -24,7 +24,7 @@ void CPlayer::Initialize()
 	m_fSpeed = 10.f;
 	m_fDistance = 25.f;
 	m_eArmor = eArmor::NORMAL;
-	m_fAngle = 270.f;
+	m_fAngle = 90.f;
 	m_fLife = 50;
 	m_fMaxLife = 50;
 	m_iScore = 0;
@@ -99,7 +99,6 @@ void CPlayer::Release()
 
 void CPlayer::CreateNoramlBullet()
 {
-
 	CObj* pBullet = CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY);
 	pBullet->SetAngle(m_fAngle);
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER_BULLET, pBullet);
@@ -119,7 +118,7 @@ void CPlayer::CreateSunFlowerBullet()
 
 void CPlayer::CreateScrewBullet()
 {
-	float fStartAngle = 360.f - m_fAngle;
+	float fStartAngle = m_fAngle - 10.f;
 	CObj* pBullet = CAbstractFactory<CScrewBullet>::Create(m_tInfo.fX, m_tInfo.fY);
 	pBullet->SetAngle(fStartAngle);
 	fStartAngle += 10.f;
@@ -129,12 +128,12 @@ void CPlayer::CreateScrewBullet()
 
 void CPlayer::CreateSpreadBullet()
 {
-	float fStartAngle = m_fAngle - 10.f;
+	float fStartAngle = m_fAngle + 10.f;
 	for (int i = 0; i < 3; ++i)
 	{
 		CObj* pBullet = CAbstractFactory<CSpreadBullet>::Create(m_tInfo.fX, m_tInfo.fY);
 		pBullet->SetAngle(fStartAngle);
-		fStartAngle += 10.f;
+		fStartAngle -= 10.f;
 		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER_BULLET, pBullet);
 	}
 }
@@ -143,6 +142,18 @@ void CPlayer::CreateLeadingBullet()
 {
 	CObj* pLeadingBullet = CAbstractFactory<CLeadingBullet>::Create(m_tInfo.fX, m_tInfo.fY);
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER_BULLET, pLeadingBullet);
+}
+
+void CPlayer::CreateUltimate()
+{
+	for (int i = 0; i < 1000; ++i)
+	{
+		float fRandX = rand() % WINCX;
+		float fRandY = rand() % WINCY;
+		CObj* pBullet = CAbstractFactory<CBullet>::Create(fRandX, fRandY);
+		pBullet->SetAngle(m_fAngle);
+		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER_BULLET, pBullet);
+	}
 }
 
 void CPlayer::CreateShield()
@@ -177,7 +188,7 @@ void CPlayer::Key_Input()
 			switch (m_eArmor)
 			{
 			case NORMAL:
-				CreateScrewBullet();
+				CreateNoramlBullet();
 				m_dwLastShotTime = dwNow;
 				break;
 			case SPREAD:

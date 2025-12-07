@@ -1,8 +1,8 @@
 #pragma once
 #include "pch.h"
-#include "CObj.h"
+#include "CBulletAbstract.h"
 
-class CScrewBullet : public CObj
+class CScrewBullet : public CBulletAbstract
 {
 public:
 	CScrewBullet();

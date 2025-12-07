@@ -2,7 +2,9 @@
 #include "CPlayer.h"
 #include "CItem.h"
 #include "CShield.h"
+#include "CBulletAbstract.h"
 #include "CCollisionMgr.h"
+#include "CCloneBossBullet.h"
 
 void CCollisionMgr::PlayerBulletCollide(list<CObj*> PlayerBullet, list<CObj*> Monster)
 {
@@ -75,6 +77,11 @@ void CCollisionMgr::PlayerItemCollide(list<CObj*> Player, list<CObj*> Item)
 					dynamic_cast<CPlayer*>(pPlayer)->CreateShield();
 					pItem->SetDead();
 				}
+				else if (eItemType == eArmor::ULTIMATE)
+				{
+					dynamic_cast<CPlayer*>(pPlayer)->CreateUltimate();
+					pItem->SetDead();
+				}
 				else
 				{
 					dynamic_cast<CPlayer*>(pPlayer)->SetArmorState(eItemType);
@@ -94,8 +101,16 @@ void CCollisionMgr::ShieldBulletCollide(list<CObj*> Shield, list<CObj*> MonsterB
 		{
 			if (IntersectRect(&rc, pShield->GetRect(), pBullet->GetRect()))
 			{
+				eBulletInfo eBulletInfo = dynamic_cast<CBulletAbstract*>(pBullet)->GetBulletInfo();
+				if (eBulletInfo == eBulletInfo::TARGET_BULLET)
+				{
+					dynamic_cast<CShield*>(pShield)->TryParry(360.f - dynamic_cast<CCloneBossBullet*>(pBullet)->GetOriginAngle());
+				}
+				else
+				{
+					dynamic_cast<CShield*>(pShield)->TryParry(pBullet->GetAngle());
+				}
 				pBullet->SetDead();
-				dynamic_cast<CShield*>(pShield)->TryParry(pBullet->GetAngle());
 			}
 		}
 	}

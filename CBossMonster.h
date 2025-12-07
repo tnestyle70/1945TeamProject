@@ -14,7 +14,7 @@ public:
 public:
 	void DropItem()override;
 	void CreateSunFlower();
-	void CreateSpreadBullet();
+	void CreateSpreadBullet(int iCount, float fOffset);
 	void CreateScrewBullet();
 	void CreateBullet();
 	void CreateOrbitClone();
@@ -24,6 +24,7 @@ public:
 public:
 	void SetBossDirection();
 	void ResolveCollision();
+	void FaceRender(HDC hDC);
 private:
 	eArmor m_eArmor;
 	float m_fStartAngle;

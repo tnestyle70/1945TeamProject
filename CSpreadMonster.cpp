@@ -23,7 +23,7 @@ void CSpreadMonster::Initialize()
 	m_bOnLimitLine = false;
 	m_dwLastShotTime = NORMAL_MONSTER_SHOT_COOLTIME;
 	m_fDistance = 25.f;
-	m_fAngle = 90.f;
+	m_fAngle = 270.f;
 	m_bDropItem = false;
 }
 

@@ -15,6 +15,7 @@ void CSpreadBullet::Initialize()
 	m_tInfo.fCY = 10.f;
 	m_fSpeed = 10.f; //속도 초기화
 	//m_fRotateSpeed = 5.f;
+	m_eBulletInfo = eBulletInfo::NORMAL_BULLET;
 }
 
 int CSpreadBullet::Update() //Bullet은 상태만 변화, 판단은 MainGame에서 내리기
@@ -24,7 +25,7 @@ int CSpreadBullet::Update() //Bullet은 상태만 변화, 판단은 MainGame에서 내리기
 	//m_fAngle += m_fRotateSpeed;
 	//구한 세타값을 기준으로 이동
 	m_tInfo.fX += m_fSpeed * cosf((m_fAngle) * (PI / 180));
-	m_tInfo.fY += m_fSpeed * sinf((m_fAngle) * (PI / 180));
+	m_tInfo.fY -= m_fSpeed * sinf((m_fAngle) * (PI / 180));
 
 	CObj::Update_Rect();
 

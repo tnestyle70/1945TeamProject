@@ -2,6 +2,7 @@
 #include "CBossMonster.h"
 #include "CBullet.h"
 #include "CScrewBullet.h"
+#include "CLeadingBullet.h"
 #include "CSunFlowerBullet.h"
 #include "CSpreadBullet.h"
 #include "CAbstractFactory.h"
@@ -56,7 +57,7 @@ int CBossMonster::Update()
 		{
 			if (dwNow - m_dwLastShotTime >= BOSS_MONSTER_SPREAD_SHOT_COOLTIME)
 			{
-				CreateSpreadBullet();
+				CreateSpreadBullet(3, 10.f);
 				m_dwLastShotTime = dwNow;
 			}
 			if (dwNow - m_dLastSpawnTime >= BOSS_MONSTER_ORBIT_CLONE_SPAWN_COOLTIME)
@@ -70,7 +71,7 @@ int CBossMonster::Update()
 			if (dwNow - m_dwLastShotTime >= BOSS_MONSTER_SPREAD_SHOT_COOLTIME)
 			{
 				m_fSpeed += 0.05f;
-				CreateSpreadBullet();
+				CreateSpreadBullet(5, 20.f);
 				m_dwLastShotTime = dwNow;
 			}
 			if (dwNow - m_dLastSpawnTime >= BOSS_MONSTER_ORBIT_CLONE_SPAWN_COOLTIME)
@@ -120,16 +121,35 @@ int CBossMonster::Update()
 void CBossMonster::Render(HDC hDC)
 {
 	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
+
+	TCHAR szText[32];
+	swprintf_s(szText, TEXT("Boss HP : %0.f"), m_fLife);
+	TextOut(hDC, 440, 10, szText, lstrlen(szText));
+
+	Rectangle(hDC, 380, 30, 380 + m_fLife / 2, 38); // 체력바
+
+	MoveToEx(hDC, 380, 35, nullptr);
+	for (int i = 0; i < m_fLife / 2; i++)
+	{											//현재 체력
+		MoveToEx(hDC, 380 + i, 30, nullptr);
+		LineTo(hDC, 380 + i, 38);
+	}
+
+	FaceRender(hDC);
 }
 
 void CBossMonster::Release()
 {
-
 }
 
 void CBossMonster::DropItem()
 {
+	eArmor eItemType = eArmor::ULTIMATE;
+	//아이템 종류 결정
+	int iRandItem = rand() % 5;
+
 	CObj* pItem = CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY);
+	dynamic_cast<CItem*>(pItem)->SetItemType(eItemType);
 	CObjMgr::Get_Instance()->Add_Object(OBJ_ITEM, pItem);
 }
 
@@ -145,10 +165,10 @@ void CBossMonster::CreateSunFlower()
 	}
 }
 
-void CBossMonster::CreateSpreadBullet()
+void CBossMonster::CreateSpreadBullet(int iCount, float fOffset)
 {
-	float fStartAngle = 360.f - (m_fAngle - 10.f);
-	for (int i = 0; i < 3; ++i)
+	float fStartAngle = m_fAngle - fOffset;
+	for (int i = 0; i < iCount; ++i)
 	{
 		CObj* pBullet = CAbstractFactory<CSpreadBullet>::Create(m_tInfo.fX, m_tInfo.fY);
 		pBullet->SetAngle(fStartAngle);
@@ -173,7 +193,6 @@ void CBossMonster::CreateScrewBullet()
 void CBossMonster::CreateBullet()
 {
 	CObj* pBullet = CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY + m_fDistance);
-	pBullet->SetAngle(m_fAngle);
 	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER_BULLET, pBullet);
 	return;
 }
@@ -196,7 +215,7 @@ void CBossMonster::CreateOrbitClone()
 void CBossMonster::CreateLineClone()
 {
 	float fLineOffset = 78.f;
-	for (int i = 0; i < 10; ++i)
+	for (int i = 0; i < 8; ++i)
 	{
 		float fSpawnDuration = rand() % 1000 + 2;
 		CObj* pBossClone = CAbstractFactory<CBossCloneMonster>::Create(0.f + fLineOffset, 100.f);
@@ -256,4 +275,37 @@ void CBossMonster::ResolveCollision()
 		fRandAngle = rand() % 360;
 		m_fAngle = fRandAngle;
 	}
+}
+
+void CBossMonster::FaceRender(HDC hDC)
+{
+	MoveToEx(hDC, m_tRect.left + 35, m_tRect.top + 50, nullptr);
+	LineTo(hDC, m_tRect.left + 65, m_tRect.top + 45);					//왼쪽 눈
+	LineTo(hDC, m_tRect.left + 50, m_tRect.top + 65);
+	LineTo(hDC, m_tRect.left + 35, m_tRect.top + 50);
+
+
+	MoveToEx(hDC, m_tRect.right - 35, m_tRect.top + 50, nullptr);
+	LineTo(hDC, m_tRect.right - 65, m_tRect.top + 45);
+	LineTo(hDC, m_tRect.right - 50, m_tRect.top + 65);					// 오른쪽 눈
+	LineTo(hDC, m_tRect.right - 35, m_tRect.top + 50);
+
+
+	MoveToEx(hDC, m_tRect.left + 73, m_tRect.top + 75, nullptr);
+	LineTo(hDC, m_tRect.left + 77, m_tRect.top + 75);
+	LineTo(hDC, m_tRect.left + 75, m_tRect.top + 80);
+	LineTo(hDC, m_tRect.left + 73, m_tRect.top + 75);					//코
+
+
+	MoveToEx(hDC, m_tRect.left + 45, m_tRect.top + 110, nullptr);
+	LineTo(hDC, m_tRect.right - 45, m_tRect.top + 110);					//입
+
+
+	MoveToEx(hDC, m_tRect.left + 60, m_tRect.top + 110, nullptr);
+	LineTo(hDC, m_tRect.left + 65, m_tRect.top + 130);					//왼니
+	LineTo(hDC, m_tRect.left + 70, m_tRect.top + 110);
+
+	MoveToEx(hDC, m_tRect.right - 60, m_tRect.top + 110, nullptr);
+	LineTo(hDC, m_tRect.right - 65, m_tRect.top + 130);					//오른니
+	LineTo(hDC, m_tRect.right - 70, m_tRect.top + 110);
 }

@@ -1,7 +1,7 @@
 #pragma once
-#include "CObj.h"
+#include "CBulletAbstract.h"
 class CSpreadBullet :
-    public CObj
+    public CBulletAbstract
 {
 public:
 	CSpreadBullet();

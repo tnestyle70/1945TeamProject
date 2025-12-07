@@ -1,7 +1,7 @@
 #pragma once
-#include "CObj.h"
+#include "CBulletAbstract.h"
 
-class CBullet : public CObj
+class CBullet : public CBulletAbstract
 {
 public:
 	CBullet();
