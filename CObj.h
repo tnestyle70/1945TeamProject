@@ -16,13 +16,14 @@ public:
 	INFO* GetInfo() { return &m_tInfo; }
 	const RECT* GetRect() { return &m_tRect; }
 	void	Update_Rect();
-	void GetDamage() { m_iLife -= 1; }
-	void SetLife(int iLife) { m_iLife = iLife; }
-	int GetLife() { return m_iLife; }
+	void GetDamage() { m_fLife -= 1; }
+	void SetLife(float fLife) { m_fLife = fLife; }
+	int GetLife() { return m_fLife; }
 	void SetTarget(CObj* pTarget) { m_pTarget = pTarget; }
 	CObj* GetTarget() { return m_pTarget; }
 	bool IsDead() { return m_bDead; }
 	void SetAngle(float fAngle) {m_fAngle = fAngle;}
+	const float GetAngle() const { return m_fAngle; }
 	void SetSpeed(float fSpeed) { m_fSpeed = fSpeed; }
 	void SetPos(float fX, float fY) { m_tInfo.fX = fX, m_tInfo.fY = fY; };
 	void SetDead() { m_bDead = true; }
@@ -34,7 +35,8 @@ protected:
 	eDir m_eDir;
 	DWORD m_dwLastShotTime;
 	CObj* m_pTarget;
-	int m_iLife;
+	float m_fLife;
+	float m_fMaxLife;
 	bool m_bDead;
 	float	m_fSpeed;
 	float m_fAngle;

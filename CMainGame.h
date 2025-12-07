@@ -14,6 +14,7 @@ public:
 	void	Release();
 public:
 	void CreateNoramlMonster(int iCount);
+	void CreateSpreadMonster(int iCount);
 	void CreateBossMonster();
 private:
 	HDC		m_hDC;
@@ -21,6 +22,8 @@ private:
 	list<list<CObj*>> m_listMonsterContainer;
 	list<CObj*> m_listObj[OBJ_END];
 	DWORD m_dwNoralLastWaveTime;
-	DWORD m_dwBossLastWaveTime;
+	DWORD m_dwBossCoolTime;
+	DWORD m_dwBossAppearanceTime;
+	eBossPhase eBossPhase;
 };
 

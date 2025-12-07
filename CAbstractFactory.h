@@ -8,11 +8,10 @@ public:
 	CAbstractFactory() {};
 	~CAbstractFactory() {};
 public:
-	static CObj* CreatePlayer()
+	static CObj* Create()
 	{
 		CObj* pObj = new T;
 		pObj->Initialize();
-		pObj->SetLife(1000000);
 		return pObj;
 	}
 	//위치 세팅

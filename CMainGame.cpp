@@ -3,6 +3,7 @@
 #include "CPlayer.h"
 #include "CMonster.h"
 #include "CNormalMonster.h"
+#include "CSpreadMonster.h"
 #include "CBossMonster.h"
 #include "CAbstractFactory.h"
 #include "CCollisionMgr.h"
@@ -21,12 +22,14 @@ void CMainGame::Initialize()
 {
 	m_hDC = GetDC(g_hWnd);
 
-	CObj* pPlayer = CAbstractFactory<CPlayer>::CreatePlayer();
+	CObj* pPlayer = CAbstractFactory<CPlayer>::Create();
 	m_listObj[OBJ_PLAYER].push_back(pPlayer);
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, pPlayer);
 
-	m_dwBossLastWaveTime = 5000.f;
-}	
+	eBossPhase = eBossPhase::READY;
+	m_dwBossCoolTime = 0.f;
+	m_dwBossAppearanceTime = 200.f;
+}
 
 void CMainGame::Update()
 {
@@ -35,14 +38,36 @@ void CMainGame::Update()
 	
 	if (dwNow - m_dwNoralLastWaveTime >= NORMAL_MONSTER_WAVE_COOLTIME)
 	{
-		CreateNoramlMonster(3);
+		int iRandSpawn = rand() % 2;
+		switch (iRandSpawn)
+		{
+		case 0: CreateNoramlMonster(3); break;
+		case 1: CreateSpreadMonster(3); break;
+		default:
+			break;
+		}
+		//CreateSpreadMonster(3);
 		//마지막으로 총 쏜 시각 갱신
 		m_dwNoralLastWaveTime = dwNow;
 	}
-	if (dwNow - m_dwBossLastWaveTime >= BOSS_MONSTER_WAVE_COOLTIME)
+	CObj* pPlayer = CObjMgr::Get_Instance()->Get_Object(OBJ_PLAYER);
+	switch (eBossPhase)
 	{
-		CreateBossMonster();
-		m_dwBossLastWaveTime = dwNow;
+	case READY:
+		m_dwBossCoolTime = dwNow;
+		eBossPhase = eBossPhase::APPEAR;
+		break;
+	case APPEAR:
+		if (dynamic_cast<CPlayer*>(pPlayer)->GetScore() >= 3)
+		{
+			CreateBossMonster();
+			eBossPhase = eBossPhase::ATTACK;
+		}
+		break;
+	case ATTACK:
+		break;
+	default:
+		break;
 	}
 
 	CObjMgr::Get_Instance()->Update();
@@ -75,9 +100,23 @@ void CMainGame::CreateNoramlMonster(int iCount)
 	}
 }
 
+void CMainGame::CreateSpreadMonster(int iCount)
+{
+	//첫번째 웨이브 몬스터 생성, 서로 다른 레벨값을 줘서 몬스터 생성
+	for (int i = 0; i < iCount; ++i)
+	{
+		float fRandX = (float)(rand() % WINCX);
+		CObj* pSpreadMonster = CAbstractFactory<CSpreadMonster>::CreateMonster(fRandX, -100.f, 5);
+		//LimitLine을 400 이하의 랜덤한 수로 설정해서 대입을 시킨다.
+		float fLimitLine = (float)(rand() % 300 + 100);
+		dynamic_cast<CMonster*>(pSpreadMonster)->SetLimitLine(fLimitLine);
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, pSpreadMonster);
+	}
+}
+
 void CMainGame::CreateBossMonster()
 {
-	CObj* pBossMonster = CAbstractFactory<CBossMonster>::CreateMonster(WINCX >> 1, -100.f, 1000);
+	CObj* pBossMonster = CAbstractFactory<CBossMonster>::CreateMonster(WINCX >> 1, -100.f, 500);
 	dynamic_cast<CMonster*>(pBossMonster)->SetLimitLine(400.f);
 	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER, pBossMonster);
 }

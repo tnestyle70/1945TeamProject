@@ -7,6 +7,8 @@
 #include "CAbstractFactory.h"
 #include "CObjMgr.h"
 #include "CItem.h"
+#include "CBossCloneMonster.h"
+#include "CPlayer.h"
 
 CBossMonster::CBossMonster()
 {
@@ -35,6 +37,8 @@ int CBossMonster::Update()
 {
 	if (m_bDead)
 	{
+		CObj* pPlayer = CObjMgr::Get_Instance()->Get_Object(OBJ_PLAYER);
+		dynamic_cast<CPlayer*>(pPlayer)->UpdateScore();
 		if (!m_bDropItem)
 		{
 			DropItem();
@@ -48,30 +52,45 @@ int CBossMonster::Update()
 	if (m_bOnLimitLine)
 	{
 		m_fLimitLine = 10000.f;
-		if (m_iLife > 950 && m_iLife <= 1000)
+		if (m_fLife > 350 && m_fLife <= 500)
 		{
-			if (dwNow - m_dwLastShotTime >= BOSS_MONSTER_SCREW_SHOT_COOLTIME)
+			if (dwNow - m_dwLastShotTime >= BOSS_MONSTER_SPREAD_SHOT_COOLTIME)
 			{
-				CreateBullet();
+				CreateSpreadBullet();
 				m_dwLastShotTime = dwNow;
 			}
+			if (dwNow - m_dLastSpawnTime >= BOSS_MONSTER_ORBIT_CLONE_SPAWN_COOLTIME)
+			{
+				CreateOrbitClone();
+				m_dLastSpawnTime = dwNow;
+			}
 		}
-		else if (m_iLife >= 900 && m_iLife <= 950)
+		else if (m_fLife > 150 && m_fLife <= 350)
+		{
+			if (dwNow - m_dwLastShotTime >= BOSS_MONSTER_SPREAD_SHOT_COOLTIME)
+			{
+				m_fSpeed += 0.05f;
+				CreateSpreadBullet();
+				m_dwLastShotTime = dwNow;
+			}
+			if (dwNow - m_dLastSpawnTime >= BOSS_MONSTER_ORBIT_CLONE_SPAWN_COOLTIME)
+			{
+				CreateLineClone();
+				m_dLastSpawnTime = dwNow;
+			}
+		}
+		else if (m_fLife >= 0 && m_fLife <= 150)
 		{
 			if (dwNow - m_dwLastShotTime >= BOSS_MONSTER_SUNFLOWER_SHOT_COOLTIME)
 			{
-				m_fSpeed += 5.f;
+				m_fSpeed += 0.1f;
 				CreateSunFlower();
 				m_dwLastShotTime = dwNow;
 			}
-		}
-		else if (m_iLife >= 600 && m_iLife <= 900)
-		{
-			if (dwNow - m_dwLastShotTime >= BOSS_MONSTER_SUNFLOWER_SHOT_COOLTIME)
+			if (dwNow - m_dLastSpawnTime >= BOSS_MONSTER_RANDOM_CLONE_SPAWN_COOLTIME)
 			{
-				m_fSpeed += 5.f;
-				CreateScrewBullet();
-				m_dwLastShotTime = dwNow;
+				CreateRandomClone();
+				m_dLastSpawnTime = dwNow;
 			}
 		}
 		m_tInfo.fX += m_fSpeed * cosf(m_fAngle * (PI / 180));
@@ -101,10 +120,6 @@ int CBossMonster::Update()
 void CBossMonster::Render(HDC hDC)
 {
 	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
-
-	WCHAR cBuf[64];
-	swprintf_s(cBuf, L"보스 몬스터 남은 체력 : %d", GetLife());
-	TextOutW(hDC, 10, 10, cBuf, lstrlenW(cBuf));
 }
 
 void CBossMonster::Release()
@@ -121,23 +136,23 @@ void CBossMonster::DropItem()
 void CBossMonster::CreateSunFlower()
 {
 	float fStartAngle = m_fAngle;
-	for (int i = 0; i < 50; ++i)
+	for (int i = 0; i < 20; ++i)
 	{
 		CObj* pBullet = CAbstractFactory<CSunFlowerBullet>::Create(m_tInfo.fX, m_tInfo.fY);
 		pBullet->SetAngle(fStartAngle);
 		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER_BULLET, pBullet);
-		fStartAngle += 10.f;
+		fStartAngle += 18.f;
 	}
 }
 
 void CBossMonster::CreateSpreadBullet()
 {
-	float fStartAngle = m_fAngle;
-	for (int i = 0; i < 5; ++i)
+	float fStartAngle = 360.f - (m_fAngle - 10.f);
+	for (int i = 0; i < 3; ++i)
 	{
 		CObj* pBullet = CAbstractFactory<CSpreadBullet>::Create(m_tInfo.fX, m_tInfo.fY);
 		pBullet->SetAngle(fStartAngle);
-		fStartAngle -= 10.f;
+		fStartAngle += 10.f;
 		pBullet->SetTarget(CObjMgr::Get_Instance()->Get_Object(OBJ_PLAYER));
 		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER_BULLET, pBullet);
 		//m_pBulletList->push_back(pBullet);
@@ -158,12 +173,48 @@ void CBossMonster::CreateScrewBullet()
 void CBossMonster::CreateBullet()
 {
 	CObj* pBullet = CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY + m_fDistance);
-	float fDirX = cosf(m_fAngle * (PI / 180));
-	float fDirY = -sinf(m_fAngle * (PI / 180));
-	pBullet->SetSpeed(3.f);
-	pBullet->SetDirection(fDirX, fDirY);
+	pBullet->SetAngle(m_fAngle);
 	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER_BULLET, pBullet);
 	return;
+}
+
+void CBossMonster::CreateOrbitClone()
+{
+	float fOrbitOffset = 0.f;
+	for (int i = 0; i < 5; ++i)
+	{
+		float fSpawnDuration = rand() % 1000 + 2;
+		CObj* pBossClone = CAbstractFactory<CBossCloneMonster>::Create(WINCX >> 1, 100.f);
+		dynamic_cast<CBossCloneMonster*>(pBossClone)->SetPattern(eClonePattern::ORBIT_AND_STRIKE);
+		dynamic_cast<CBossCloneMonster*>(pBossClone)->SetOrbitOffset(fOrbitOffset);
+		dynamic_cast<CBossCloneMonster*>(pBossClone)->SetOrbitSpawnDuration(fSpawnDuration);
+		fOrbitOffset += 72.f;
+		CObjMgr::Get_Instance()->Add_Object(OBJ_BOSS_CLONE, pBossClone);
+	}
+}
+
+void CBossMonster::CreateLineClone()
+{
+	float fLineOffset = 78.f;
+	for (int i = 0; i < 10; ++i)
+	{
+		float fSpawnDuration = rand() % 1000 + 2;
+		CObj* pBossClone = CAbstractFactory<CBossCloneMonster>::Create(0.f + fLineOffset, 100.f);
+		dynamic_cast<CBossCloneMonster*>(pBossClone)->SetPattern(eClonePattern::LINE_STRIKE);
+		dynamic_cast<CBossCloneMonster*>(pBossClone)->SetLineOffset(fLineOffset);
+		dynamic_cast<CBossCloneMonster*>(pBossClone)->SetLineSpawnDuration(fSpawnDuration);
+		fLineOffset += 100.f;
+		CObjMgr::Get_Instance()->Add_Object(OBJ_BOSS_CLONE, pBossClone);
+	}
+}
+
+void CBossMonster::CreateRandomClone()
+{
+	float fX = rand() % WINCX; 
+	float fY = rand() % WINCY;
+	CObj* pCloneBoss = CAbstractFactory<CBossCloneMonster>::Create(fX, fY);
+	dynamic_cast<CBossCloneMonster*>(pCloneBoss)->SetPattern(eClonePattern::RANDOM_STRIKE);
+	CObjMgr::Get_Instance()->Add_Object(OBJ_BOSS_CLONE, pCloneBoss);
 }
 
 void CBossMonster::SetBulletDir()

@@ -17,6 +17,9 @@ public:
 	void CreateSpreadBullet();
 	void CreateScrewBullet();
 	void CreateBullet();
+	void CreateOrbitClone();
+	void CreateLineClone();
+	void CreateRandomClone();
 	void SetBulletDir();
 public:
 	void SetBossDirection();
@@ -28,4 +31,5 @@ private:
 	float m_fSpread;
 	float m_fBulletAngle;
 	float m_fBulletCount;
+	DWORD m_dLastSpawnTime;
 };

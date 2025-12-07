@@ -12,6 +12,9 @@ public:
 	void Render(HDC hDC)override;
 	void Release()override;
 public:
+	void DropItem()override;
+public:
+	void CreateSpread();
 	void CreateSunFlower();
 	void CreateSpiralBullet();
 	void CreateBullet();

@@ -1,12 +1,44 @@
-﻿  CLeadingBullet.cpp
-C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CLeadingBullet.cpp(37,17): warning C4244: '초기화 중': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  (소스 파일 '/CLeadingBullet.cpp'을(를) 컴파일하는 중)
+﻿  CAbstractFactory.h
+C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CObj.h(21,25): warning C4244: 'return': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 '/CAbstractFactory.h'을(를) 컴파일하는 중)
   
-C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CLeadingBullet.cpp(44,41): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  (소스 파일 '/CLeadingBullet.cpp'을(를) 컴파일하는 중)
+  CMainGame.cpp
+C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CObj.h(21,25): warning C4244: 'return': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 '/CMainGame.cpp'을(를) 컴파일하는 중)
   
-C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CLeadingBullet.cpp(45,41): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  (소스 파일 '/CLeadingBullet.cpp'을(를) 컴파일하는 중)
+C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CMainGame.cpp(30,21): warning C4244: '=': 'float'에서 'DWORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 '/CMainGame.cpp'을(를) 컴파일하는 중)
   
-C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CLeadingBullet.cpp(105,1): warning C4715: 'CLeadingBullet::FindNearestMonster': 모든 제어 경로에서 값을 반환하지는 않습니다.
+C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CMainGame.cpp(31,27): warning C4244: '=': 'float'에서 'DWORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 '/CMainGame.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CMainGame.cpp(37,14): warning C4244: '초기화 중': 'ULONGLONG'에서 'DWORD'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 '/CMainGame.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CAbstractFactory.h(30,17): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 '/CMainGame.cpp'을(를) 컴파일하는 중)
+      C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CAbstractFactory.h(30,17):
+      템플릿 인스턴스화 컨텍스트(가장 오래된 인스턴스화 컨텍스트)가
+          C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CMainGame.cpp(119,55):
+          컴파일되는 클래스 템플릿 인스턴스화 'CAbstractFactory<CBossMonster>'에 대한 참조를 확인하세요.
+          C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CAbstractFactory.h(25,15):
+          클래스 템플릿 멤버 함수 'CObj *CAbstractFactory<CBossMonster>::CreateMonster(float,float,int)'을(를) 컴파일하는 중입니다.
+              C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CMainGame.cpp(119,21):
+              'CMainGame::CreateBossMonster'에서 'CAbstractFactory<CBossMonster>::CreateMonster'에 대한 첫 번째 참조를 확인하세요.
+  
+  CMonster.cpp
+C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CObj.h(21,25): warning C4244: 'return': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 '/CMonster.cpp'을(를) 컴파일하는 중)
+  
+  CSunFlowerBullet.cpp
+C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CObj.h(21,25): warning C4244: 'return': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 '/CSunFlowerBullet.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CSunFlowerBullet.cpp(26,41): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 '/CSunFlowerBullet.cpp'을(를) 컴파일하는 중)
+  
+C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\DefaultWindow\CSunFlowerBullet.cpp(27,41): warning C4244: '인수': 'double'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  (소스 파일 '/CSunFlowerBullet.cpp'을(를) 컴파일하는 중)
+  
+  코드를 생성하고 있습니다...
   DefaultWindow.vcxproj -> C:\Users\tnest\OneDrive\바탕 화면\쥬신\디폴트윈도우\x64\Debug\DefaultWindow.exe

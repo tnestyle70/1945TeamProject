@@ -4,6 +4,7 @@
 #include "CAbstractFactory.h"
 #include "CObjMgr.h"
 #include "CItem.h"
+#include "CPlayer.h"
 
 CNormalMonster::CNormalMonster()
 {
@@ -31,6 +32,8 @@ int CNormalMonster::Update()
 {
 	if (m_bDead)
 	{
+		CObj* pPlayer = CObjMgr::Get_Instance()->Get_Object(OBJ_PLAYER);
+		dynamic_cast<CPlayer*>(pPlayer)->UpdateScore();
 		if (!m_bDropItem)
 		{
  			DropItem();
@@ -51,8 +54,6 @@ int CNormalMonster::Update()
 		}
 	}
 
-	m_tInfo.fY += m_fSpeed;
-
 	__super::Update_Rect();
 
 	//한계선 체크, 선에 닿았을 때 LimitLine true로 변경 후 총알 발사
@@ -61,6 +62,10 @@ int CNormalMonster::Update()
 		m_tInfo.fY = m_fLimitLine - m_tInfo.fCX * 0.5f;
 		m_fSpeed = 0.f;
 		m_bOnLimitLine = true;
+	}
+	else
+	{
+		m_tInfo.fY += m_fSpeed;
 	}
 
 	__super::Update_Rect();
@@ -81,7 +86,7 @@ void CNormalMonster::DropItem()
 {
 	eArmor eItemType = eArmor::NORMAL;
 	//아이템 종류 결정
-	int iRandItem = rand() % 4;
+	int iRandItem = rand() % 5;
 
 	switch (iRandItem)
 	{
@@ -89,6 +94,7 @@ void CNormalMonster::DropItem()
 	case 1: eItemType = eArmor::LEADING; break;
 	case 2: eItemType = eArmor::SCREW; break;
 	case 3: eItemType = eArmor::SUNFLOWER; break;
+	case 4: eItemType = eArmor::SHIELD; break;
 	default:
 		break;
 	}
@@ -105,13 +111,8 @@ void CNormalMonster::DropItem()
 void CNormalMonster::CreateBullet()
 {
 	CObj* pBullet = CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY + m_fDistance);
-	float fDirX = cosf(m_fAngle * (PI / 180));
-	float fDirY = -sinf(m_fAngle * (PI / 180));
-	//pBullet->SetDirection(eDir::DOWN);
-	pBullet->SetDirection(fDirX, fDirY);
-	pBullet->SetSpeed(3.f);
+	pBullet->SetAngle(m_fAngle);
 	CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER_BULLET, pBullet);
-	//m_pBulletList->push_back(pBullet);
 	return;
 }
 

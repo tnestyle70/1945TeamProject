@@ -11,4 +11,6 @@ public:
 	int	 Update()	override;
 	void Render(HDC hDC)override;
 	void Release()		override;
+public:
+	void ResolveCollision();
 };

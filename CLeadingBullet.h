@@ -13,6 +13,7 @@ public:
 	void Release() override;
 	void Render(HDC hDC) override;
 public:
+	void ResolveCollision();
 	CObj* FindNearestMonster();
 private:
 	CObj* m_pNearMonster;

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CPlayer.h"
 #include "CItem.h"
+#include "CShield.h"
 #include "CCollisionMgr.h"
 
 void CCollisionMgr::PlayerBulletCollide(list<CObj*> PlayerBullet, list<CObj*> Monster)
@@ -35,9 +36,24 @@ void CCollisionMgr::MonsterBulletCollide(list<CObj*> MonsterBullet, list<CObj*> 
 				pPlayer->GetDamage();
 				if (pPlayer->GetLife() <= 0)
 				{
-					pPlayer->SetDead();
+					pPlayer->SetLife(50);
 				}
 				pMonsterBullet->SetDead();
+			}
+		}
+	}
+}
+
+void CCollisionMgr::PlayerMonsterCollide(list<CObj*> Player, list<CObj*> Monster)
+{
+	RECT rc = {};
+	for (auto& pPlayer : Player)
+	{
+		for (auto& pMonster : Monster)
+		{
+			if (IntersectRect(&rc, pPlayer->GetRect(), pMonster->GetRect()))
+			{
+				pPlayer->GetDamage();
 			}
 		}
 	}
@@ -53,8 +69,33 @@ void CCollisionMgr::PlayerItemCollide(list<CObj*> Player, list<CObj*> Item)
 			if (IntersectRect(&rc, pPlayer->GetRect(), pItem->GetRect()))
 			{
 				eArmor eItemType = dynamic_cast<CItem*>(pItem)->GetItemType();
-				dynamic_cast<CPlayer*>(pPlayer)->SetArmorState(eItemType);
-				pItem->SetDead();
+
+				if (eItemType == eArmor::SHIELD)
+				{
+					dynamic_cast<CPlayer*>(pPlayer)->CreateShield();
+					pItem->SetDead();
+				}
+				else
+				{
+					dynamic_cast<CPlayer*>(pPlayer)->SetArmorState(eItemType);
+					pItem->SetDead();
+				}
+			}
+		}
+	}
+}
+
+void CCollisionMgr::ShieldBulletCollide(list<CObj*> Shield, list<CObj*> MonsterBullet)
+{
+	RECT rc = {};
+	for (auto& pShield : Shield)
+	{
+		for (auto& pBullet : MonsterBullet)
+		{
+			if (IntersectRect(&rc, pShield->GetRect(), pBullet->GetRect()))
+			{
+				pBullet->SetDead();
+				dynamic_cast<CShield*>(pShield)->TryParry(pBullet->GetAngle());
 			}
 		}
 	}

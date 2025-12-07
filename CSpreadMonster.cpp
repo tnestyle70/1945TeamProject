@@ -4,6 +4,8 @@
 #include "CAbstractFactory.h"
 #include "CSpreadBullet.h"
 #include "CObjMgr.h"
+#include "CItem.h"
+#include "CPlayer.h"
 
 CSpreadMonster::CSpreadMonster()
 {
@@ -15,19 +17,29 @@ CSpreadMonster::~CSpreadMonster()
 
 void CSpreadMonster::Initialize()
 {
-	m_tInfo.fCX = 150.f;
-	m_tInfo.fCY = 150.f;
+	m_tInfo.fCX = 50.f;
+	m_tInfo.fCY = 50.f;;
 	m_fSpeed = 3.f;
 	m_bOnLimitLine = false;
 	m_dwLastShotTime = NORMAL_MONSTER_SHOT_COOLTIME;
 	m_fDistance = 25.f;
-	m_fLimitLine = 500.f;
+	m_fAngle = 90.f;
+	m_bDropItem = false;
 }
 
 int CSpreadMonster::Update()
 {
 	if (m_bDead)
+	{
+		CObj* pPlayer = CObjMgr::Get_Instance()->Get_Object(OBJ_PLAYER);
+		dynamic_cast<CPlayer*>(pPlayer)->UpdateScore();
+		if (!m_bDropItem)
+		{
+			DropItem();
+			m_bDropItem = true;
+		}
 		return DEAD;
+	}
 
 	DWORD dwNow = GetTickCount64();
 
@@ -35,13 +47,11 @@ int CSpreadMonster::Update()
 	{
 		if (dwNow - m_dwLastShotTime >= NORMAL_MONSTER_SHOT_COOLTIME)
 		{
-			CreateSunFlower();
+			CreateSpread();
 			//마지막으로 총 쏜 시각 갱신
 			m_dwLastShotTime = dwNow;
 		}
 	}
-
-	m_tInfo.fY += m_fSpeed;
 
 	__super::Update_Rect();
 
@@ -52,6 +62,10 @@ int CSpreadMonster::Update()
 		m_fSpeed = 0.f;
 		m_bOnLimitLine = true;
 	}
+	else
+	{
+		m_tInfo.fY += m_fSpeed;
+	}
 
 	__super::Update_Rect();
 
@@ -61,14 +75,50 @@ int CSpreadMonster::Update()
 void CSpreadMonster::Render(HDC hDC)
 {
 	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
-
-	WCHAR cBuf[64];
-	swprintf_s(cBuf, L"보스 몬스터 남은 체력 : %d", GetLife());
-	TextOutW(hDC, 10, 10, cBuf, lstrlenW(cBuf));
 }
 
 void CSpreadMonster::Release()
 {
+}
+
+void CSpreadMonster::DropItem()
+{
+	eArmor eItemType = eArmor::NORMAL;
+	//아이템 종류 결정
+	int iRandItem = rand() % 5;
+
+	switch (iRandItem)
+	{
+	case 0: eItemType = eArmor::SPREAD; break;
+	case 1: eItemType = eArmor::LEADING; break;
+	case 2: eItemType = eArmor::SCREW; break;
+	case 3: eItemType = eArmor::SUNFLOWER; break;
+	case 4: eItemType = eArmor::SHIELD; break;
+	default:
+		break;
+	}
+
+	int iRandDrop = rand() % 100;
+
+	if (iRandDrop <= 30)
+		return;
+	CObj* pItem = CAbstractFactory<CItem>::Create(m_tInfo.fX, m_tInfo.fY);
+	dynamic_cast<CItem*>(pItem)->SetItemType(eItemType);
+	CObjMgr::Get_Instance()->Add_Object(OBJ_ITEM, pItem);
+}
+
+void CSpreadMonster::CreateSpread()
+{
+	float fStartAngle = m_fAngle - 10.f;
+	for (int i = 0; i < 3; ++i)
+	{
+		CObj* pBullet = CAbstractFactory<CSpreadBullet>::Create(m_tInfo.fX, m_tInfo.fY);
+		pBullet->SetAngle(fStartAngle);
+		fStartAngle += 10.f;
+		pBullet->SetTarget(CObjMgr::Get_Instance()->Get_Object(OBJ_PLAYER));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER_BULLET, pBullet);
+		//m_pBulletList->push_back(pBullet);
+	}
 }
 
 void CSpreadMonster::CreateSunFlower()

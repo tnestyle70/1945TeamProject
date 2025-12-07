@@ -14,6 +14,7 @@ public:
 	void Render(HDC hDC) override;
 public:
 	void SetPlayer() {}
+	void ResolveCollision();
 private:
 	POINT m_tCenter; //기준으로 돌아갈 중심
 	float m_fRotateAngle;

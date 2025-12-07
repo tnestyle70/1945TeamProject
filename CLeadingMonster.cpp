@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CLeadingMonster.h"
 #include "CBullet.h"
+#include "CSunFlowerBullet.h"
 #include "CAbstractFactory.h"
 #include "CObjMgr.h"
 
@@ -40,16 +41,24 @@ int CLeadingMonster::Update()
 		}
 	}
 
-	m_tInfo.fY += m_fSpeed;
-
 	__super::Update_Rect();
 
 	//한계선 체크, 선에 닿았을 때 LimitLine true로 변경 후 총알 발사
 	if (m_tRect.bottom >= m_fLimitLine)
 	{
-		m_tInfo.fY = m_fLimitLine - m_tInfo.fCX * 0.5f;
-		m_fSpeed = 0.f;
 		m_bOnLimitLine = true;
+		m_pTarget = CObjMgr::Get_Instance()->Get_Object(OBJ_PLAYER);
+		float fDX = m_pTarget->GetInfo()->fX - m_tInfo.fX;
+		float fDY = m_pTarget->GetInfo()->fY - m_tInfo.fY;
+		float fDistance = sqrtf(fDX * fDX + fDY * fDY);
+		float fCeta = acosf(fDX / fDistance);
+		float fDegree = fCeta * (180 / PI);
+		m_tInfo.fX += m_fSpeed * cosf(fDegree * (PI / 180));
+		m_tInfo.fY += m_fSpeed * sinf(fDegree * (PI / 180));
+	}
+	else
+	{
+		m_tInfo.fY += m_fSpeed;
 	}
 
 	__super::Update_Rect();
@@ -60,10 +69,6 @@ int CLeadingMonster::Update()
 void CLeadingMonster::Render(HDC hDC)
 {
 	Rectangle(hDC, m_tRect.left, m_tRect.top, m_tRect.right, m_tRect.bottom);
-
-	WCHAR cBuf[64];
-	swprintf_s(cBuf, L"보스 몬스터 남은 체력 : %d", GetLife());
-	TextOutW(hDC, 10, 10, cBuf, lstrlenW(cBuf));
 }
 
 void CLeadingMonster::Release()
@@ -72,19 +77,16 @@ void CLeadingMonster::Release()
 
 void CLeadingMonster::CreateSunFlower()
 {
-	const int iBulletCount = 16;
-	const float fBaseAngle = 0.f;
-	const float fAngleStep = 360.f / iBulletCount;
+	//반드시 StartAngle 변수를 생성해야 함. 몬스터는 Angle을 기준으로 움직이기 때문에 
+	//몬스터 angle 값을 변화 시키게 되면 몬스터의 방향이 계속 틀어짐
+	float fStartAngle = m_fAngle;
 
-	for (int i = 0; i < iBulletCount; ++i)
+	for (int i = 0; i < 50; ++i)
 	{
-		float fAngleDeg = fBaseAngle + fAngleStep * i;
-
-		m_fDirX = cosf(fAngleDeg * (PI / 180.f));
-		m_fDirY = -sinf(fAngleDeg * (PI / 180.f));
-
-		CObj* pBullet = CAbstractFactory<CBullet>::Create(m_tInfo.fX, m_tInfo.fY);
-		pBullet->SetDirection(m_fDirX, m_fDirY);
+		CObj* pBullet = CAbstractFactory<CSunFlowerBullet>::Create(m_tInfo.fX, m_tInfo.fY);
+		pBullet->SetAngle(fStartAngle);
+		CObjMgr::Get_Instance()->Add_Object(OBJ_MONSTER_BULLET, pBullet);
+		fStartAngle += 10.f;
 	}
 }
 

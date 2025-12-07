@@ -11,4 +11,6 @@ public:
 	int Update() override;
 	void Release() override;
 	void Render(HDC hDC) override;
+public:
+	void TryParry(float fAngle);
 };

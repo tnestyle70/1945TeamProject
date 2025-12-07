@@ -22,9 +22,12 @@ public:
     void CreateSpreadBullet();
     void CreateLeadingBullet();
     void CreateShield();
+    int GetScore() { return m_iScore; }
+    void UpdateScore() { m_iScore += 1; };
 private:
     list<CObj*>* m_pBulletList;
     void   Key_Input();
     eArmor m_eArmor;
+    int m_iScore;
 };
 

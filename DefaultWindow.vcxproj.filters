@@ -67,6 +67,9 @@
     <Filter Include="01. Obj\04.Shield">
       <UniqueIdentifier>{9a5e7f94-d25f-45fd-b4d8-bc1010f07d56}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01. Obj\02.Bullet\CloneBossBullet">
+      <UniqueIdentifier>{0d18e9f9-5bb2-4534-a38a-4bbf9094a870}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -141,6 +144,9 @@
     <ClInclude Include="CItem.h">
       <Filter>01. Obj\05.Item</Filter>
     </ClInclude>
+    <ClInclude Include="CCloneBossBullet.h">
+      <Filter>01. Obj\02.Bullet\CloneBossBullet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DefaultWindow.cpp">
@@ -205,6 +211,9 @@
     </ClCompile>
     <ClCompile Include="CItem.cpp">
       <Filter>01. Obj\05.Item</Filter>
+    </ClCompile>
+    <ClCompile Include="CCloneBossBullet.cpp">
+      <Filter>01. Obj\02.Bullet\CloneBossBullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

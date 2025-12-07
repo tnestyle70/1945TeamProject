@@ -46,4 +46,5 @@ private:
 	static CObjMgr* m_pInstance;
 	//Main 게임에서 생성한 objlist를 Mgr에서 관리
 	list<CObj*> m_listObj[OBJ_END];
+	float m_fScore = 0;
 };

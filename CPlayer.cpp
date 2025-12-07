@@ -20,11 +20,14 @@ CPlayer::~CPlayer()
 
 void CPlayer::Initialize()
 {
-	m_tInfo = { WINCX >> 1, WINCY >> 1, 50.f, 50.f };
+	m_tInfo = { WINCX >> 1, WINCY >> 1, 40.f, 60.f };
 	m_fSpeed = 10.f;
 	m_fDistance = 25.f;
 	m_eArmor = eArmor::NORMAL;
-	m_fAngle = 90.f;
+	m_fAngle = 270.f;
+	m_fLife = 50;
+	m_fMaxLife = 50;
+	m_iScore = 0;
 }
 
 int CPlayer::Update()
@@ -41,15 +44,53 @@ int CPlayer::Update()
 
 void CPlayer::Render(HDC hDC)
 {
+	/*
 	Rectangle(hDC,
 		m_tRect.left,
 		m_tRect.top,
 		m_tRect.right,
 		m_tRect.bottom);
+		*/
 
-	WCHAR cBuf[64];
-	swprintf_s(cBuf, L"플레이어 남은 체력 : %d", GetLife());
-	TextOutW(hDC, 10, 40, cBuf, lstrlenW(cBuf));
+	MoveToEx(hDC, m_tInfo.fX, m_tInfo.fY - 15, nullptr);
+	LineTo(hDC, m_tInfo.fX + 10, m_tInfo.fY);
+	LineTo(hDC, m_tInfo.fX - 10, m_tInfo.fY);
+	LineTo(hDC, m_tInfo.fX, m_tInfo.fY - 15);
+
+	// 몸체
+	MoveToEx(hDC, m_tInfo.fX, m_tInfo.fY, nullptr);
+	LineTo(hDC, m_tInfo.fX, m_tInfo.fY + 22);
+
+	// 좌 날개
+	MoveToEx(hDC, m_tInfo.fX, m_tInfo.fY + 7, nullptr);
+	LineTo(hDC, m_tInfo.fX - 20, m_tInfo.fY + 15);
+
+	// 우 날개
+	MoveToEx(hDC, m_tInfo.fX, m_tInfo.fY + 7, nullptr);
+	LineTo(hDC, m_tInfo.fX + 20, m_tInfo.fY + 15);
+
+	// 꼬리 
+	MoveToEx(hDC, m_tInfo.fX, m_tInfo.fY + 22, nullptr);
+	LineTo(hDC, m_tInfo.fX - 10, m_tInfo.fY + 30);
+	MoveToEx(hDC, m_tInfo.fX, m_tInfo.fY + 22, nullptr);
+	LineTo(hDC, m_tInfo.fX + 10, m_tInfo.fY + 30);
+	LineTo(hDC, m_tInfo.fX - 10, m_tInfo.fY + 30);
+
+	TCHAR szText[32];
+	swprintf_s(szText, TEXT("HP : %0.f"), m_fLife);
+	TextOut(hDC, 10, 10, szText, lstrlen(szText));
+
+	Rectangle(hDC, 10, 30, 10 + m_fMaxLife * 4, 40); // 체력바
+
+	MoveToEx(hDC, 10, 30, nullptr);
+	for (int i = 0; i < m_fLife * 4; i++)
+	{											//현재 체력
+		MoveToEx(hDC, 10 + i, 30, nullptr);
+		LineTo(hDC, 10 + i, 40);
+	}
+
+	swprintf_s(szText, TEXT("SCORE : %d"), m_iScore);
+	TextOut(hDC, 10, 50, szText, lstrlen(szText));
 }
 
 void CPlayer::Release()
@@ -67,18 +108,18 @@ void CPlayer::CreateNoramlBullet()
 void CPlayer::CreateSunFlowerBullet()
 {
 	float fStartAngle = m_fAngle;
-	for (int i = 0; i < 50; ++i)
+	for (int i = 0; i < 20; ++i)
 	{
 		CObj* pBullet = CAbstractFactory<CSunFlowerBullet>::Create(m_tInfo.fX, m_tInfo.fY);
 		pBullet->SetAngle(fStartAngle);
 		CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER_BULLET, pBullet);
-		fStartAngle += 10.f;
+		fStartAngle += 18.f;
 	}
 }
 
 void CPlayer::CreateScrewBullet()
 {
-	float fStartAngle = m_fAngle;
+	float fStartAngle = 360.f - m_fAngle;
 	CObj* pBullet = CAbstractFactory<CScrewBullet>::Create(m_tInfo.fX, m_tInfo.fY);
 	pBullet->SetAngle(fStartAngle);
 	fStartAngle += 10.f;
@@ -88,8 +129,8 @@ void CPlayer::CreateScrewBullet()
 
 void CPlayer::CreateSpreadBullet()
 {
-	float fStartAngle = 360.f - (m_fAngle + 20.f);
-	for (int i = 0; i < 5; ++i)
+	float fStartAngle = m_fAngle - 10.f;
+	for (int i = 0; i < 3; ++i)
 	{
 		CObj* pBullet = CAbstractFactory<CSpreadBullet>::Create(m_tInfo.fX, m_tInfo.fY);
 		pBullet->SetAngle(fStartAngle);
@@ -140,19 +181,19 @@ void CPlayer::Key_Input()
 				m_dwLastShotTime = dwNow;
 				break;
 			case SPREAD:
-				CreateSunFlowerBullet();
+				CreateSpreadBullet();
 				m_dwLastShotTime = dwNow;
 				break;
 			case SCREW:
-				CreateSpreadBullet();
+				CreateScrewBullet();
 				m_dwLastShotTime = dwNow;
 				break;
 			case LEADING:
-				CreateSpreadBullet();
+				CreateLeadingBullet();
 				m_dwLastShotTime = dwNow;
 				break;
 			case SUNFLOWER:
-				CreateLeadingBullet();
+				CreateSunFlowerBullet();
 				m_dwLastShotTime = dwNow;
 				break;
 			default:

@@ -58,6 +58,7 @@ void CObjMgr::Update()
 	CCollisionMgr::PlayerItemCollide(m_listObj[OBJ_PLAYER], m_listObj[OBJ_ITEM]);
 	CCollisionMgr::PlayerBulletCollide(m_listObj[OBJ_PLAYER_BULLET], m_listObj[OBJ_MONSTER]);
 	CCollisionMgr::MonsterBulletCollide(m_listObj[OBJ_MONSTER_BULLET], m_listObj[OBJ_PLAYER]);
+	CCollisionMgr::ShieldBulletCollide(m_listObj[OBJ_SHIELD], m_listObj[OBJ_MONSTER_BULLET]);
 }
 /*
 void CObjMgr::Late_Update()
@@ -73,6 +74,7 @@ void CObjMgr::Late_Update()
 	//CCollisionMgr::RectCollide(m_listObj[OBJ_MONSTER], m_listObj[OBJ_MOUSE]);
 }
 */
+
 void CObjMgr::Render(HDC hDC)
 {
 	for (size_t i = 0; i < OBJ_END; ++i)
