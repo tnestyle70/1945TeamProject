@@ -66,7 +66,7 @@ int CBossMonster::Update()
 				m_dLastSpawnTime = dwNow;
 			}
 		}
-		else if (m_fLife > 150 && m_fLife <= 350)
+		else if (m_fLife > 250 && m_fLife <= 350)
 		{
 			if (dwNow - m_dwLastShotTime >= BOSS_MONSTER_SPREAD_SHOT_COOLTIME)
 			{
@@ -80,7 +80,7 @@ int CBossMonster::Update()
 				m_dLastSpawnTime = dwNow;
 			}
 		}
-		else if (m_fLife >= 0 && m_fLife <= 150)
+		else if (m_fLife > 150 && m_fLife <= 250)
 		{
 			if (dwNow - m_dwLastShotTime >= BOSS_MONSTER_SUNFLOWER_SHOT_COOLTIME)
 			{
@@ -91,6 +91,23 @@ int CBossMonster::Update()
 			if (dwNow - m_dLastSpawnTime >= BOSS_MONSTER_RANDOM_CLONE_SPAWN_COOLTIME)
 			{
 				CreateRandomClone();
+				m_dLastSpawnTime = dwNow;
+			}
+		}
+		else if (m_fLife > 0 && m_fLife <= 150)
+		{
+			if (dwNow - m_dwLastShotTime >= BOSS_MONSTER_SUNFLOWER_SHOT_COOLTIME)
+			{
+				m_fSpeed += 0.1f;
+				CreateSunFlower();
+				m_dwLastShotTime = dwNow;
+			}
+			if (dwNow - m_dLastSpawnTime >= BOSS_MONSTER_RANDOM_CLONE_SPAWN_COOLTIME)
+			{
+				for (int i = 0; i < 3; ++i)
+				{
+					CreateRandomClone();
+				}
 				m_dLastSpawnTime = dwNow;
 			}
 		}
